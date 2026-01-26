@@ -1,0 +1,513 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #aaaaaa;
+}
+
+.home {
+    background-image: url('Fotokita.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-image {
+    height: 40vh;
+    width: 40vh;
+}
+
+.navbar {
+    background-color: #D0D0D0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s ease;
+    z-index: 1000;
+}
+
+.navbar.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.navbar div {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-atas img {
+    height: 50px;
+    width: 100%;
+    margin-top: 1px;
+}
+
+.nav-links {}
+
+.nav-links li {
+    list-style-type: none;
+    font-style: normal;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: black;
+}
+
+.speech {
+    margin-top: 150px;
+}
+
+.speech h2 {
+    display: flex;
+    justify-content: center;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.speech-row-top {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.speech-text-top {
+    background-color: rgba(0, 255, 42, 0.107);
+    height: 600px;
+    width: 481px;
+}
+
+.speech-text-top h3 {
+    display: flex;
+    margin-top: 10%;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.speech-text-top p {
+    display: flex;
+    font-size: 32px;
+}
+
+.speech-image-top {
+    background-color: rgba(0, 0, 255, 0.13);
+    margin-left: 10%;
+    height: 600px;
+    width: 481px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.speech-image-top img {
+    height: 50%;
+    width: 50%;
+}
+
+.speech-row-bottom {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.speech-text-bottom {
+    background-color: rgba(0, 255, 255, 0.101);
+    height: 600px;
+    width: 481px;
+}
+
+.speech-text-bottom h3 {
+    display: flex;
+    margin-top: 10%;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.speech-text-bottom p {
+    display: flex;
+    font-size: 32px;
+}
+
+.speech-image-bottom {
+    background-color: rgba(0, 0, 255, 0.13);
+    margin-right: 10%;
+    height: 600px;
+    width: 481px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.speech-image-bottom img {
+    height: 50%;
+    width: 50%;
+}
+
+.tentang-arsyatera {
+    margin-top: 150px;
+}
+
+.tentang-arsyatera h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+}
+
+.tentang-arsyatera-top {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.image-tentang-arsyatera-top {
+    background-color: rgb(0, 255, 26);
+    height: 600px;
+    width: 481px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-tentang-arsyatera-top img {
+    height: 50%;
+    width: 50%;
+}
+
+.text-tentang-arsyatera-top {
+    margin-left: 10%;
+    background-color: rgba(0, 0, 255, 0.134);
+    height: 600px;
+    width: 481px;
+}
+
+.text-tentang-arsyatera-top h3 {
+    display: flex;
+    justify-content: left;
+    margin-top: 50px;
+    font-size: 48px;
+    font-weight: 900;
+}
+
+.text-tentang-arsyatera-top p {
+    display: flex;
+    justify-content: left;
+    font-size: 34px;
+}
+
+.tentang-arsyatera-bottom {
+    margin-top: 20px;
+}
+
+.tentang-arsyatera-bottom h3 {
+    font-size: 48px;
+}
+
+.tentang-arsyatera-bottom h3 {
+    justify-content: center;
+    display: flex;
+}
+
+.background-logo {
+    margin-top: 20px;
+    justify-content: center;
+    display: flex;
+}
+
+.background-logo a {
+    height: 333px;
+    width: 333px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background-logo img {
+    width: 100%;
+    height: 100%;
+}
+
+/* .gallery {
+    background-color: rgba(0, 0, 255, 0.24);
+    margin-top: 150px;
+}
+
+.judul-gellery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.gallery-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 300px;
+}
+
+.gallery-item {
+    width: 100%;
+    display: block;
+}
+
+.gallery-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 15px;
+    border-radius: 8px;
+}*/
+
+/* gallery {
+    background-color: rgba(0, 0, 255, 0.24);
+    margin-top: 150px;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 60px 0;
+}
+
+.gallery h2 {
+    display: flex;
+    justify-content: center;
+}
+
+.gallery-item {
+    background-color: aquamarine;
+    position: relative;
+    width: 300px;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.gallery-item img {
+    width: 50%;
+    display: block;
+    border-radius: 12px;
+}
+
+.gallery-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 12px 18px;
+    border-radius: 10px;
+} */
+
+/* CONTAINER GALLERY */
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
+
+/* ITEM */
+.gallery-item {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* GAMBAR BIASA */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* TEKS TENGAH */
+.gallery-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 12px;
+    z-index: 10;
+}
+
+/* ===== CAROUSEL DALAM (KHUSUS FOTO-FOTO) ===== */
+.inner-carousel {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.inner-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.inner-track img {
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.footer {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #D0D0D0;
+    height: 50px;
+    margin-top: 50px;
+}
+
+.footer p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* ========================= */
+/* RESPONSIVE - TABLET */
+/* ========================= */
+@media (max-width: 1024px) {
+
+    .speech-text-top,
+    .speech-text-bottom,
+    .speech-image-top,
+    .speech-image-bottom,
+    .image-tentang-arsyatera-top,
+    .text-tentang-arsyatera-top {
+        width: 380px;
+        height: 500px;
+    }
+
+    .speech-text-top h3,
+    .speech-text-bottom h3,
+    .text-tentang-arsyatera-top h3 {
+        font-size: 36px;
+    }
+
+    .speech-text-top p,
+    .speech-text-bottom p,
+    .text-tentang-arsyatera-top p {
+        font-size: 24px;
+    }
+
+    .background-logo a {
+        width: 260px;
+        height: 260px;
+    }
+}
+
+/* ========================= */
+/* RESPONSIVE - HP */
+/* ========================= */
+@media (max-width: 768px) {
+
+    .home-image {
+        width: 15vh;
+        height: 15vh;
+    }
+
+    .speech-text-top,
+    .speech-text-bottom,
+    .speech-image-top,
+    .speech-image-bottom,
+    .image-tentang-arsyatera-top,
+    .text-tentang-arsyatera-top {
+        width: 280px;
+        height: 380px;
+    }
+
+    .speech-text-top h3,
+    .speech-text-bottom h3,
+    .text-tentang-arsyatera-top h3 {
+        font-size: 28px;
+    }
+
+    .speech-text-top p,
+    .speech-text-bottom p,
+    .text-tentang-arsyatera-top p {
+        font-size: 18px;
+    }
+
+    .speech-image-top {
+        margin-left: 5%;
+    }
+
+    .speech-image-bottom {
+        margin-right: 5%;
+    }
+
+    .background-logo a {
+        width: 200px;
+        height: 200px;
+    }
+
+    .speech h2,
+    .tentang-arsyatera h2 {
+        font-size: 26px;
+    }
+}
+
+/* ========================= */
+/* RESPONSIVE - HP KECIL */
+/* ========================= */
+@media (max-width: 480px) {
+
+    .speech-text-top,
+    .speech-text-bottom,
+    .speech-image-top,
+    .speech-image-bottom,
+    .image-tentang-arsyatera-top,
+    .text-tentang-arsyatera-top {
+        width: 220px;
+        height: 320px;
+    }
+
+    .speech-text-top h3,
+    .speech-text-bottom h3,
+    .text-tentang-arsyatera-top h3 {
+        font-size: 22px;
+    }
+
+    .speech-text-top p,
+    .speech-text-bottom p,
+    .text-tentang-arsyatera-top p {
+        font-size: 16px;
+    }
+
+    .background-logo a {
+        width: 160px;
+        height: 160px;
+    }
+}
