@@ -79,6 +79,11 @@ body {
     width: 90%;
 }
 
+.container h1 {
+    margin-top: 30px;
+    text-align: center;
+}
+
 /* Jarak antar card */
 .card {
     margin-top: 40px;
@@ -510,3 +515,4 @@ body {
     }
 
 }
+
