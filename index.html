@@ -1,158 +1,1279 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arsyatera</title>
-    <link rel="stylesheet" href="style.css" />
+    <!-- Import Google Fonts (Montserrat & Playfair Display untuk efek Serif pada judul) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ======================== 
+           GENERAL SETTING 
+           ======================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: white;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* ======================== 
+           HOME
+           ======================== */
+        .home {
+            background: url('home-foto-angkatan.png') center/cover no-repeat, linear-gradient(135deg, #7a0c1f, #a3162b);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 10%;
+        }
+
+        .hero-content {
+            max-width: 900px; /* Sedikit diperlebar agar cukup ruang untuk 1 baris */
+            color: white;
+            text-align: left;
+            margin-top: 50px;
+        }
+
+        .hero-badge {
+            background-color: #8B1E3F;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: white;
+            display: inline-block;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: white;
+            white-space: nowrap; /* Mencegah teks turun ke baris baru */
+        }
+
+        .hero-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            opacity: 0.95;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: white;
+        }
+
+        @media (max-width: 1024px) {
+            /* Menyesuaikan ukuran font sedikit di layar menengah agar tetap 1 baris jika memungkinkan */
+            .hero-title { font-size: 50px; }
+        }
+
+        @media (max-width: 768px) {
+            .home { padding: 0 5%; justify-content: center; text-align: center; }
+            .hero-content { text-align: center; margin-top: 0; }
+            /* Pada layar HP, jika dipaksa nowrap mungkin terpotong, 
+               tapi kita usahakan sekecil mungkin agar tetap sebaris 
+               atau Anda bisa menghapus white-space: nowrap khusus di HP jika terlalu kecil */
+            .hero-title { 
+                font-size: 28px; 
+                white-space: nowrap; 
+            }
+        }
+
+        /* ======================== 
+           NAVBAR 
+           ======================== */
+        .navbar {
+            background-color: #D0D0D0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s ease;
+            z-index: 1000;
+        }
+
+        .navbar.active {
+            opacity: 1;
+            pointer-events: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-navbar img {
+            height: 45px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        /* ======================== 
+           MEET OUR LEADER 
+           ======================== */
+        .meet-leader {
+            padding: 100px 20px;
+            background-color: #fbfbfb;
+            text-align: center;
+        }
+
+        .ml-main-title {
+            font-family: 'Playfair Display', serif;
+            color: #A3162B;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .ml-container {
+            max-width: 950px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .ml-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .ml-card.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .ml-image {
+            width: 260px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .ml-image img {
+            width: 100%;
+            height: auto;
+            max-height: 350px;
+            object-fit: contain;
+            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.15));
+        }
+
+        .ml-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .ml-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            color: #A3162B;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .ml-text-scroll {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .ml-text-scroll::-webkit-scrollbar { width: 6px; }
+        .ml-text-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .ml-text-scroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        .ml-text-scroll::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+        .ml-text-scroll p {
+            font-size: 14.5px;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        @media (max-width: 768px) {
+            .ml-card, .ml-card.reverse {
+                flex-direction: column;
+                padding: 30px 20px;
+                gap: 30px;
+            }
+            .ml-image { width: 220px; }
+            .ml-text-scroll { max-height: 350px; }
+            .ml-content { text-align: center; }
+            .ml-text-scroll p { text-align: left; }
+        }
+
+        /* ======================== 
+           AFTER MOVIE 
+           ======================== */
+        .after-movie {
+            padding: 80px 20px;
+            text-align: center;
+            background-color: white;
+        }
+
+        .am-main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #0b4b46;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .am-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            text-align: left;
+        }
+
+        .am-video-wrapper {
+            flex: 1;
+            background: #e5e5e5;
+            height: 320px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 1px solid #d0d0d0;
+        }
+
+        .am-content {
+            flex: 1;
+        }
+
+        .am-tag {
+            font-size: 12px;
+            color: #888;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .am-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            color: #0b4b46;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .am-desc {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        .am-btn {
+            background: #A3162B;
+            color: white;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .am-btn:hover {
+            transform: translateY(-3px);
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .am-container { flex-direction: column; text-align: center; gap: 40px; }
+            .am-video-wrapper { width: 100%; height: 250px; }
+        }
+
+        /* ======================== 
+           THEME SONG 
+           ======================== */
+        .ts-theme-song {
+            background: linear-gradient(135deg, #7a0c1f, #8e0e22);
+            padding: 80px 20px 40px 20px;
+            width: 100%;
+            border-radius: 40px 40px 0 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .ts-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .ts-title {
+            color: white;
+            margin-bottom: 40px;
+            font-size: 36px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .ts-card {
+            margin-bottom: 30px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .ts-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .ts-small {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .ts-text h3 {
+            margin: 0 0 15px 0;
+            font-size: 32px;
+            color: #0b4b46;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .ts-desc {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .ts-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .ts-btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .ts-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .ts-spotify { background: #1db954; }
+        .ts-youtube { background: #ff0000; }
+
+        .ts-image {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ts-image img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+        }
+
+        .ts-controls {
+            margin-top: 20px;
+            font-size: 24px;
+            display: flex;
+            gap: 20px;
+            color: #333;
+        }
+
+        .ts-controls span {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .ts-controls span:hover { color: #a3162b; }
+
+        @media (max-width: 768px) {
+            .ts-theme-song {
+                border-radius: 30px 30px 0 0;
+                padding: 60px 20px 30px 20px;
+            }
+            .ts-card {
+                flex-direction: column-reverse;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+            .ts-image img {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        /* ======================== 
+           TENTANG ARSYATERA 
+           ======================== */
+        .tentang {
+            width: 100%;
+        }
+
+        /* Bagian Atas: Filosofi Nama */
+        .filosofi-nama {
+            background: linear-gradient(135deg, #7a0c1f, #8e0e22);
+            color: white;
+            padding: 40px 20px 80px 20px;
+            text-align: center;
+        }
+
+        .fn-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .fn-main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .fn-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-style: normal;
+            font-size: 18px;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 60px;
+            letter-spacing: 0.5px;
+        }
+
+        .fn-heading {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .fn-lead {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .fn-items {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .fn-item h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .fn-item p {
+            font-size: 14px;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        /* Bagian Bawah: Filosofi Logo & Warna */
+        .filosofi-logo {
+            background: white;
+            padding: 80px 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .fl-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .fl-main-logo {
+            width: 250px;
+            height: auto;
+            margin-bottom: 40px;
+        }
+
+        .fl-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+
+        .fl-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .fl-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fl-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .fl-item h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .fl-item p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .fl-quote {
+            font-style: italic;
+            font-size: 16px;
+            font-weight: 600;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            color: #222;
+        }
+
+        .fl-colors {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .color-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 300px;
+        }
+
+        .color-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .color-raspberry { background-color: #8B1E3F; }
+        .color-teal { background-color: #0D3B3F; }
+
+        .color-hex {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .color-item h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .color-item p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .fl-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .fl-colors {
+                gap: 40px;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* ======================== 
+           GALLERY 
+           ======================== */
+        .gallery-section {
+            background: linear-gradient(135deg, #8B182A, #5a0815);
+            width: 100%;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .gallery-title {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-title {
+                font-size: 40px;
+            }
+            .gallery-section {
+                min-height: 50vh;
+            }
+        }
+
+        /* ======================== 
+           SECRETO 
+           ======================== */
+        .secreto-section {
+            background: linear-gradient(135deg, #5a0815, #3a040d);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px 100px 20px;
+        }
+
+        .secreto-container {
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .secreto-title {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            margin-bottom: 15px;
+        }
+
+        .secreto-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            margin-bottom: 50px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .secreto-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: left;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            margin: 0 auto;
+        }
+
+        .secreto-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .secreto-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .secreto-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .secreto-username {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #111;
+            font-size: 16px;
+        }
+
+        .secreto-body p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            color: #222;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .secreto-date {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: #888;
+            display: block;
+            margin-bottom: 25px;
+        }
+
+        .secreto-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .icon-svg {
+            fill: none;
+            stroke: #111;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            cursor: pointer;
+            transition: stroke 0.2s, transform 0.2s;
+        }
+
+        .icon-svg:hover {
+            stroke: #A3162B;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .secreto-title { font-size: 36px; }
+            .secreto-card { padding: 25px; }
+        }
+
+        /* ======================== 
+           FOOTER 
+           ======================== */
+        .footer {
+            background-color: #ffffff;
+            color: #333;
+            width: 100%;
+        }
+
+        .footer-top {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        .footer-logo img {
+            width: 70px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .footer-contact {
+            text-align: left;
+        }
+
+        .footer-contact h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .footer-contact ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .icon-svg-small {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: #111;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .footer-bottom p {
+            font-size: 13px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .footer-top {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+            .footer-contact {
+                text-align: center;
+            }
+            .footer-contact li {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
+
     <!-- HOME START -->
     <section class="home">
-        <img class="home-image" src="Logo Pure.svg" alt="Logo">
+        <div class="hero-content">
+            <div class="hero-badge">WELCOME TO</div>
+            <h1 class="hero-title">Arsyatera Luvievar Adhibrata</h1>
+            <p class="hero-subtitle">Verventara</p>
+        </div>
     </section>
     <!-- HOME END -->
+
     <!-- NAVBAR START -->
     <nav class="navbar">
         <div>
-            <a href="#" class="logo-atas"><img src="Arsyatera.svg" alt="Logo"></a>
-            <!-- <ul class="nav-links">
-                <li><a href="#">ARSYATERA</a></li>
-                <li><a href="#">LUVIEVAR ADHIBRATA</a></li>
-            </ul> -->
+            <a href="#" class="logo-navbar">
+                <img src="Arsyatera.svg" alt="Logo Navbar" onerror="this.onerror=null; this.src='https://placehold.co/200x50?text=Arsyatera&bg=D0D0D0'">
+            </a>
         </div>
     </nav>
     <!-- NAVBAR END -->
-    <!-- SAMBUTAN KETUA ANGKATAN START -->
-    <div class="luaran">
-        <div class="container">
-            <h1>SAMBUTAN KETUA ANGKATAN</h2>
-            <!-- Card Pertama -->
-            <div class="card">
-                <img src="https://picsum.photos/400/300" alt="Supermileage">
-                <div class="card-content">
-                    <h2>Putri Aulia Firdausi</h2>
-                    <p>
-                        Assalamualaikum Wr. Wb.
-                    </p>
-                    <p>
-                        Segala puji bagi Allah Swt. yang telah melimpahkan rahmat serta hidayah-Nya kepada kita. Shalawat serta salam kita haturkan kepada Nabi Muhammad Saw., yang telah membimbing kita dari zaman kegelapan menuju zaman yang terang benderang.
-                    </p>
-                    <p>
-                        Alhamdulillah, tak disangka 3 tahun terlewati, dan tibalah kita di penghujung masa putih abu-abu ini. Rupanya sudah lama terlampaui masa dimana kita dihantui oleh perasaan semangat, gugup, senang, dan takut, bercampur tak keruan mengiringi langkah kaki, sambil memikirkan bagaimana cara berbaur dengan mereka yang sekarang telah menjadi tempat bercerita dan meluapkan isi hati.
-                    </p>
-                    <p>
-                        Entah sejak kapan kita mulai saling memahami dari yang awalnya tak kenal pasti. Tak ada yang menyadari tepatnya kapan perubahan itu terjadi—apakah saat mulai bertegur sapa pada OSAMA, atau saat dihukum karena telat masuk aula pada IBA, mungkin saat berambisi memenangkan lomba-lomba pada MAINTION, bisa jadi saat bersama-sama menghafalkan ”kungfu tenses” pada IBI, barangkali saat menikmati takjil bersama ketika PARTI, atau mungkin ketika menyantap gule dan sate limited edition ketika PANDA. Yang teringat jelas ialah bahwa kita telah saling mengerti kala melakukan overtime laptop bersama hingga kantuk menghampiri.
-                    </p>
-                    <p>
-                        Teruntuk teman-teman angkatan 15 yang luar biasa. akan selalu terparti rasa terima kasih sedalam-dalamnya karena telah bertahan dan tumbuh bersama. Angkatan yang disebut-sebut sebagai angkatan percobaan. Angkatan yang menjadi awalan untuk banyak hal. Angkatan yang tak merasakan pagelaran Muhadhoroh Ammah seperti kakak-kakaknya, namun selalu mendominasi Artshow selama ada keikutsertaannya. Semua pengalaman baru tersebut tentunya menjadi tantangan tersendiri, namun itu juga yang mengukuhkan kekuatan kami. Tangis, tawa, banyak rasa yang kita lalui bersama. 
-                    </p>
-                    <p>
-                        Tak lupa, rasa terima kasih kami langitkan kepada asatidz dan ustadzat yang telah sabar menghadapi serta mengajarkan kami berbagai hal indah nan berarti selama menjadi santri Mahad Al Qalam, yang menemani dan membersamai kami untuk bertumbuh hingga menjadi insan yang siap menghadapi hari-hari esok di fase kehidupan berikutnya dengan segala bentuk tantangannya.  Tak mungkin terlupa untuk mengucapkan terima kasih yang tulus kepada bapak ibu pegawai dapur, laundry, dan tenaga lapangan ma’had yang sangat berjasa dalam keseharian kami hingga kami selalu merasa nyaman dan terfasilitasi setiap harinya. Juga banyak terima kasih kepada berbagai pihak lain yang mungkin jarang disorot jasanya.
-                    </p>
-                    <p>
-                        Lirik “so make the friendship bracelets, take the moment and taste it, you've got no reason to be afraid” dari lagu You’re on Your Own oleh Taylor Swift akan menjadi salah satu lagu yang terputar untuk mewakili perjalanan Angkatan 15 dalam masa putih abu-abu ini. Semoga setiap langkah yang kita tempuh kelak tetap akan membawa harapan, kehangatan, dan keberanian. Arsyatera kan selalu ada untuk menjadi tempat bernaung lagi, lagi, dan lagi. 
-                    </p>
+
+    <!-- MEET OUR LEADER START -->
+    <section class="meet-leader">
+        <h2 class="ml-main-title">Meet Our Leader</h2>
+        
+        <div class="ml-container">
+            <!-- Card Pertama (Naufal) -->
+            <div class="ml-card">
+                <div class="ml-image">
+                    <img src="bingkai.png" alt="Foto Ketua Angkatan Naufal" onerror="this.onerror=null; this.src='https://placehold.co/300x400?text=Bingkai+Foto'">
+                </div>
+                <div class="ml-content">
+                    <h3 class="ml-name">Naufal Rabbani Syaifudin</h3>
+                    <div class="ml-text-scroll">
+                        <p style="text-align: left;">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيم</p>
+                        <p>Assalamu’alaikum warahmatullahi wabarakatuh</p>
+                        <p>Segala puji bagi Allah SWT yang dengan rahmat dan karunia-Nya kita dapat melalui berbagai proses pembelajaran, pengalaman, dan perjalanan berharga hingga saat ini. Shalawat serta salam semoga selalu tercurahkan kepada junjungan kita Nabi Muhammad SAW.</p>
+                        <p>Alhamdulillah dengan rasa syukur, telah usai perjalanan dan perjuangan selama 3 tahun membawa kenangan yang sudah kita ukir bersama. Perjalanan yang begitu singkat, rasanya baru kemarin kenal satu sama lain, bercanda dan belajar bersama. Meskipun kita dari berbagai macam daerah, pribadi yang berbeda-beda namun hal itu bukan menjadi hambatan untuk saling menyatukan visi, berjuang bersama, susah dan senang bersama, sampai disebutnya Angkatan 15 Arsyatera Luvievar Adhibrata ini sebagai "Keluarga".</p>
+                        <p>Kita tumbuh, berubah, dan ditempa oleh waktu. Kita belajar arti disiplin, arti tanggung jawab, dan yang paling penting, arti memiliki tempat untuk pulang, bukan secara fisik, tetapi secara nurani. Semua itu menjadikan perjalanan kita lebih dari sekadar masa belajar, melainkan proses menjadi pribadi yang lebih matang dan penuh makna.</p>
+                        <p>Segala tawa, air mata, dan kisah yang mengiringinya, kita belajar bahwa kebersamaan bukan hanya tentang seberapa lama kita bersama, tetapi seberapa dalam kita saling memahami. Di setiap sudut Ma’had, ada cerita kita dari bangun pagi yang berat, diskusi panjang yang melelahkan, hingga malam-malam ketika kita saling menguatkan.</p>
+                        <p>Kini, ketika langkah kita mulai diarahkan pada perjalanan baru, kenangan-kenangan itu akan terus hidup. Kita mungkin tak lagi berjalan beriringan setiap hari, tapi ikatan yang kita bangun akan selalu menyatukan kita di manapun kita berpijak.</p>
+                        <p>Dengan penuh kerendahan hati kami juga ingin mengucapkan terima kasih yang sebesar-besarnya kepada para ustadz dan ustadzah yang telah membimbing kami selama tiga tahun ini. Mereka bukan hanya menjadi pengajar, tetapi juga menjadi orang tua kedua yang selalu siap mengingatkan ketika kami salah.</p>
+                        <p>Setiap nasihat, senyuman, bahkan teguran yang pernah kami terima, kini menjadi bagian penting dari pembentukan diri kami. Tanpa bimbingan, kesabaran, dan keikhlasan mereka, kami tidak akan menjadi seperti hari ini. Terima kasih ustadz dan ustadzah, atas ilmu yang telah diberikan, teladan yang dicontohkan, dan atas doa-doa yang selalu dipanjatkan untuk kami.</p>
+                        <p>Semoga Allah membalas setiap kebaikan ustadz dan ustadzah dengan pahala yang berlipat, umur yang penuh keberkahan, kemurahan rezeki, serta kebahagiaan di dunia dan akhirat.</p>
+                        <p>Untuk Angkatan 15 Arsyatera Luvievar Adhibrata, terima kasih sudah menjadi cerita yang indah, rumah yang hangat, dan keluarga yang tak tergantikan. Semoga setiap langkah ke depan membawa kebaikan, keberkahan, dan kesuksesan bagi kita semua.</p>
+                        <p>Wassalamualaikum warahmatullahi wabarakatuh</p>
+                    </div>
                 </div>
             </div>
-            <!-- Card Kedua -->
-            <div class="card card-second">
-                <img src="https://picsum.photos/401/300" alt="Second Image">
-                <div class="card-content">
-                    <h2>Naufal Rabbani Syaifudin</h2>
-                    <p>بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيم</p>
-                    <p>Assalamu’alaikum warahmatullahi wabarakatuh</p>
-                    <p>
-                        Segala puji bagi Allah SWT yang dengan rahmat dan karunia-Nya kita dapat melalui berbagai proses pembelajaran, pengalaman, dan perjalanan berharga hingga saat ini. Shalawat serta salam semoga selalu tercurahkan kepada junjungan kita Nabi Muhammad SAW.
-                    </p>
-                    <p>
-                        Alhamdulillah dengan rasa syukur, telah usai perjalanan dan perjuangan selama 3 tahun membawa kenangan yang sudah kita ukir bersama. Perjalanan yang begitu singkat, rasanya baru kemarin kenal satu sama lain, bercanda dan belajar bersama. Meskipun kita dari berbagai macam daerah, pribadi yang berbeda-beda namun hal itu bukan menjadi hambatan untuk saling menyatukan visi, berjuang bersama, susah dan senang bersama, sampai disebutnya Angkatan 15 Arsyatera Luvievar Adhibrata ini sebagai "Keluarga".
-                    </p>
-                    <p>
-                        Kita tumbuh, berubah, dan ditempa oleh waktu. Kita belajar arti disiplin, arti tanggung jawab, dan yang paling penting, arti memiliki tempat untuk pulang, bukan secara fisik, tetapi secara nurani. Semua itu menjadikan perjalanan kita lebih dari sekadar masa belajar, melainkan proses menjadi pribadi yang lebih matang dan penuh makna.
-                    </p>
-                    <p>
-                        Segala tawa, air mata, dan kisah yang mengiringinya, kita belajar bahwa kebersamaan bukan hanya tentang seberapa lama kita bersama, tetapi seberapa dalam kita saling memahami. Di setiap sudut Ma’had, ada cerita kita dari bangun pagi yang berat, diskusi panjang yang melelahkan, hingga malam-malam ketika kita saling menguatkan.
-                    </p>
-                    <p>
-                        Kini, ketika langkah kita mulai diarahkan pada perjalanan baru, kenangan-kenangan itu akan terus hidup. Kita mungkin tak lagi berjalan beriringan setiap hari, tapi ikatan yang kita bangun akan selalu menyatukan kita di manapun kita berpijak.
-                    </p>
-                    <p>
-                        Dengan penuh kerendahan hati kami juga ingin mengucapkan terima kasih yang sebesar-besarnya kepada para ustadz dan ustadzah yang telah membimbing kami selama tiga tahun ini. Mereka bukan hanya menjadi pengajar, tetapi juga menjadi orang tua kedua yang selalu siap mengingatkan ketika kami salah.
-                    </p>
-                    <p>
-                        Setiap nasihat, senyuman, bahkan teguran yang pernah kami terima, kini menjadi bagian penting dari pembentukan diri kami. Tanpa bimbingan, kesabaran, dan keikhlasan mereka, kami tidak akan menjadi seperti hari ini. Terima kasih ustadz dan ustadzah, atas ilmu yang telah diberikan, teladan yang dicontohkan, dan atas doa-doa yang selalu dipanjatkan untuk kami.
-                    </p>
-                    <p>
-                        Semoga Allah membalas setiap kebaikan ustadz dan ustadzah dengan pahala yang berlipat, umur yang penuh keberkahan, kemurahan rezeki, serta kebahagiaan di dunia dan akhirat.
-                    </p>
-                    <p>
-                        Untuk Angkatan 15 Arsyatera Luvievar Adhibrata, terima kasih sudah menjadi cerita yang indah, rumah yang hangat, dan keluarga yang tak tergantikan. Semoga setiap langkah ke depan membawa kebaikan, keberkahan, dan kesuksesan bagi kita semua.
-                    </p>
-                    <p>Wassalamualaikum warahmatullahi wabarakatuh</p>
+
+            <!-- Card Kedua (Putri) - Teks di kiri, Gambar di kanan -->
+            <div class="ml-card reverse">
+                <div class="ml-image">
+                    <img src="bingkai.png" alt="Foto Ketua Angkatan Putri" onerror="this.onerror=null; this.src='https://placehold.co/300x400?text=Bingkai+Foto'">
+                </div>
+                <div class="ml-content">
+                    <h3 class="ml-name">Putri Aulia Firdausi</h3>
+                    <div class="ml-text-scroll">
+                        <p>Assalamualaikum Wr. Wb.</p>
+                        <p>Segala puji bagi Allah Swt. yang telah melimpahkan rahmat serta hidayah-Nya kepada kita. Shalawat serta salam kita haturkan kepada Nabi Muhammad Saw., yang telah membimbing kita dari zaman kegelapan menuju zaman yang terang benderang.</p>
+                        <p>Alhamdulillah, tak disangka 3 tahun terlewati, dan tibalah kita di penghujung masa putih abu-abu ini. Rupanya sudah lama terlampaui masa dimana kita dihantui oleh perasaan semangat, gugup, senang, dan takut, bercampur tak keruan mengiringi langkah kaki, sambil memikirkan bagaimana cara berbaur dengan mereka yang sekarang telah menjadi tempat bercerita dan meluapkan isi hati.</p>
+                        <p>Entah sejak kapan kita mulai saling memahami dari yang awalnya tak kenal pasti. Tak ada yang menyadari tepatnya kapan perubahan itu terjadi—apakah saat mulai bertegur sapa pada OSAMA, atau saat dihukum karena telat masuk aula pada IBA, mungkin saat berambisi memenangkan lomba-lomba pada MAINTION, bisa jadi saat bersama-sama menghafalkan ”kungfu tenses” pada IBI, barangkali saat menikmati takjil bersama ketika PARTI, atau mungkin ketika menyantap gule dan sate limited edition ketika PANDA. Yang teringat jelas ialah bahwa kita telah saling mengerti kala melakukan overtime laptop bersama hingga kantuk menghampiri.</p>
+                        <p>Teruntuk teman-teman angkatan 15 yang luar biasa. akan selalu terparti rasa terima kasih sedalam-dalamnya karena telah bertahan dan tumbuh bersama. Angkatan yang disebut-sebut sebagai angkatan percobaan. Angkatan yang menjadi awalan untuk banyak hal. Angkatan yang tak merasakan pagelaran Muhadhoroh Ammah seperti kakak-kakaknya, namun selalu mendominasi Artshow selama ada keikutsertaannya. Semua pengalaman baru tersebut tentunya menjadi tantangan tersendiri, namun itu juga yang mengukuhkan kekuatan kami. Tangis, tawa, banyak rasa yang kita lalui bersama.</p>
+                        <p>Tak lupa, rasa terima kasih kami langitkan kepada asatidz dan ustadzat yang telah sabar menghadapi serta mengajarkan kami berbagai hal indah nan berarti selama menjadi santri Mahad Al Qalam, yang menemani dan membersamai kami untuk bertumbuh hingga menjadi insan yang siap menghadapi hari-hari esok di fase kehidupan berikutnya dengan segala bentuk tantangannya. Tak mungkin terlupa untuk mengucapkan terima kasih yang tulus kepada bapak ibu pegawai dapur, laundry, dan tenaga lapangan ma’had yang sangat berjasa dalam keseharian kami hingga kami selalu merasa nyaman dan terfasilitasi setiap harinya. Juga banyak terima kasih kepada berbagai pihak lain yang mungkin jarang disorot jasanya.</p>
+                        <p>Lirik “so make the friendship bracelets, take the moment and taste it, you've got no reason to be afraid” dari lagu You’re on Your Own oleh Taylor Swift akan menjadi salah satu lagu yang terputar untuk mewakili perjalanan Angkatan 15 dalam masa putih abu-abu ini. Semoga setiap langkah yang kita tempuh kelak tetap akan membawa harapan, kehangatan, dan keberanian. Arsyatera kan selalu ada untuk menjadi tempat bernaung lagi, lagi, dan lagi.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- MEET OUR LEADER END -->
+
+    <!-- AFTER MOVIE START -->
+    <section class="after-movie">
+        <h2 class="am-main-title">Our After Movie</h2>
+        
+        <div class="am-container">
+            <div class="am-video-wrapper">
+                Link Youtube
+            </div>
+            <div class="am-content">
+                <span class="am-tag">Who we are</span>
+                <h3 class="am-title">AFTER MOVIE</h3>
+                <p class="am-desc">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+                <a href="#" class="am-btn">DISCOVER MORE</a>
+            </div>
+        </div>
+    </section>
+    <!-- AFTER MOVIE END -->
+
+    <!-- THEME SONG START -->
+    <section class="ts-theme-song">
+        <div class="ts-container">
+            <h2 class="ts-title">Our Theme Song</h2>
+
+            <div class="ts-card">
+                <div class="ts-text">
+                    <p class="ts-small">Our theme song</p>
+                    <h3>Kisah ini Abadi</h3>
+                    <p class="ts-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                    <div class="ts-buttons">
+                        <a href="#" class="ts-btn ts-spotify">Spotify</a>
+                        <a href="#" class="ts-btn ts-youtube">YouTube</a>
+                    </div>
+                </div>
+                <div class="ts-image">
+                    <img src="https://picsum.photos/300?random=1" alt="theme song cover">
+                    <div class="ts-controls">
+                        <span>⏮</span><span>▶</span><span>⏭</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ts-card">
+                <div class="ts-text">
+                    <p class="ts-small">Our theme song</p>
+                    <h3>Lagu 2</h3>
+                    <p class="ts-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                    <div class="ts-buttons">
+                        <a href="#" class="ts-btn ts-spotify">Spotify</a>
+                        <a href="#" class="ts-btn ts-youtube">YouTube</a>
+                    </div>
+                </div>
+                <div class="ts-image">
+                    <img src="https://picsum.photos/300?random=2" alt="theme song cover">
+                    <div class="ts-controls">
+                        <span>⏮</span><span>▶</span><span>⏭</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- SAMBUTAN KETUA ANGKATAN END -->
+    </section>
+    <!-- THEME SONG END -->
+
     <!-- TENTANG ARSYATERA START -->
-    <section class="tentang-arsyatera">
-        <h2>TENTANG ARSYATERA</h2>
-        <!-- Image + Text -->
-        <div class="tentang-arsyatera-top">
-            <div class="image-tentang-arsyatera-top">
-                <img src="image.png" alt="About Arsyatera">
-            </div>
-            <div class="text-tentang-arsyatera-top">
-                <h3>ARSYATERA</h3>
-                <p>Lorem ipsum bla bla bla</p>
+    <section class="tentang">
+        
+        <!-- Filosofi Nama -->
+        <div class="filosofi-nama">
+            <div class="fn-container">
+                <h2 class="fn-main-title">Tentang Arsyatera.</h2>
+                <p class="fn-subtitle">Iuventus pietas varenci ferventara.</p>
+                
+                <h3 class="fn-heading">FILOSOFI NAMA</h3>
+                <p class="fn-lead">Generasi ke-15 Ma'had Al-Qalam yang merupakan puncak tertinggi tempat kami berlabuh dan berjuang bersama.</p>
+
+                <div class="fn-items">
+                    <div class="fn-item">
+                        <h3>Arsyatera</h3>
+                        <p>Arsy (Arasy) bermakna singgasana tertinggi, lambang dari tempat berlabuhnya asa dan berjuang bersama-sama. Sedangkan Tera terinspirasi dari kata "Ferventera" perpaduan antara Fervent (semangat yang berkobar) dan Tera (bintang). Sebuah jiwa yang menyala dalam setiap perjuangan yang menjadi cahaya penuntun di tengah kegelapan.</p>
+                    </div>
+                    <div class="fn-item">
+                        <h3>Luvievar</h3>
+                        <p>Luvievar menjadi simbol rumah bagi jiwa yang bersemangat dan taat. Tempat di mana kebersamaan berpadu dalam rahmat-Nya. Luvietas yakni perpaduan antara "Iuventus" (pemuda) dan "Pietas" (ketaatan), melambangkan generasi yang berjiwa muda namun tetap taat pada petunjuk-Nya. Luvietas kemudian bergabung dengan kata Varanci yang berakar dari kata "Vastu" (rumah) dan "Querencia" (tempat nyaman), menggambarkan tempat kembali bersandar, menemukan arah, dan meneguhkan langkah.</p>
+                    </div>
+                    <div class="fn-item">
+                        <h3>Adhibrata</h3>
+                        <p>Adhi brata melambangkan keunggulan intelektual yang berpadu dengan kebijaksanaan. Sebuah jiwa yang menempatkan ilmu bukan sekadar pengetahuan, melainkan jalan menuju kemuliaan.</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- Bottom Image -->
-        <div class="tentang-arsyatera-bottom">
-            <h3>FILOSOFI LOGO</h3>
-            <div class="background-logo">
-                <a><img src="Logo Pure.svg" alt="Logo Philosophy"></a>
+
+        <!-- Filosofi Logo & Warna -->
+        <div class="filosofi-logo">
+            <div class="fl-container">
+                <!-- Fallback ke Logo utama jika file belum di-load lokal -->
+                <img src="Logo Pure.svg" alt="Logo Arsyatera" class="fl-main-logo" onerror="this.onerror=null; this.src='https://placehold.co/250?text=Logo+Arsyatera&bg=white&color=a3162b'">
+                
+                <h3 class="fl-title">FILOSOFI LOGO</h3>
+
+                <div class="fl-grid">
+                    <!-- Api -->
+                    <div class="fl-item">
+                        <img src="Logo_Api.png" alt="Api di Atas" onerror="this.onerror=null; this.src='https://placehold.co/100?text=Api&bg=f5f5f5'">
+                        <h4>Api di Atas</h4>
+                        <p>Melambangkan semangat, cahaya perjuangan, dan niat yang menyala. Berbentuk menyerupai lafadz Allah, bermakna bahwa setiap langkah dan usaha Arsyatera diniatkan karena Allah semata.</p>
+                    </div>
+                    <!-- Obor -->
+                    <div class="fl-item">
+                        <img src="Logo_Obor.png" alt="Obor di Tengah" onerror="this.onerror=null; this.src='https://placehold.co/100?text=Obor&bg=f5f5f5'">
+                        <h4>Obor di Tengah</h4>
+                        <p>Simbol prinsip dan keteguhan iman. Menjadi pusat keseimbangan antara idealisme dan realita, antara langit dan bumi.</p>
+                    </div>
+                    <!-- Lingkaran -->
+                    <div class="fl-item">
+                        <img src="Logo_Lingkaran.png" alt="Bentuk Lingkaran" onerror="this.onerror=null; this.src='https://placehold.co/100?text=Lingkaran&bg=f5f5f5'">
+                        <h4>Bentuk Lingkaran</h4>
+                        <p>Melambangkan kebersamaan, persatuan, dan ikatan antar anggota yang tetap berada dalam satu nilai dan tujuan meski tiap individu bergerak bebas.</p>
+                    </div>
+                </div>
+
+                <p class="fl-quote">"Logo Arsyatera mencerminkan angkatan yang berniat lurus karena Allah, bergerak dinamis dalam kebersamaan, dan berdiri kokoh pada prinsip"</p>
+
+                <!-- Filosofi Warna -->
+                <div class="fl-colors">
+                    <div class="color-item">
+                        <div class="color-circle color-raspberry"></div>
+                        <span class="color-hex">#8B1E3F</span>
+                        <h4>Deep Raspberry</h4>
+                        <p>Simbol keberanian, semangat juang, dan keteguhan hati yang matang serta bertanggung jawab.</p>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-circle color-teal"></div>
+                        <span class="color-hex">#0D3B3F</span>
+                        <h4>Hijau Teal Gelap</h4>
+                        <p>Melambangkan ketenangan, harapan, dan pertumbuhan yang berlandaskan iman dan akhlak.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
     <!-- TENTANG ARSYATERA END -->
-    <!-- GALERY ARSYATERA START -->
-    <section class="gallery">
-        <!-- FOTO-FOTO (carousel sendiri) -->
-        <div class="gallery-item">
-            <div class="inner-carousel">
-                <div class="inner-track">
-                    <img src="lia.png" alt="">
-                    <img src="lia.png" alt="">
-                    <img src="liaa.png" alt="">
+
+    <!-- GALLERY START -->
+    <section class="gallery-section">
+        <h2 class="gallery-title">Arsyatera's<br>Gallery</h2>
+    </section>
+    <!-- GALLERY END -->
+
+    <!-- SECRETO START -->
+    <section class="secreto-section">
+        <div class="secreto-container">
+            <h2 class="secreto-title">ARSYATERA<br>SECRETO</h2>
+            <p class="secreto-subtitle">Our Moment</p>
+            
+            <div class="secreto-card">
+                <div class="secreto-header">
+                    <div class="secreto-user">
+                        <div class="secreto-avatar">
+                            <svg class="icon-svg" style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <span class="secreto-username">Anonymous</span>
+                    </div>
+                    <div class="secreto-icon-right">
+                        <svg class="icon-svg" style="width: 28px; height: 28px;" viewBox="0 0 24 24">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="secreto-body">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <span class="secreto-date">August 2026</span>
+                </div>
+                
+                <div class="secreto-actions">
+                    <svg class="icon-svg" style="width: 20px; height: 20px;" viewBox="0 0 24 24">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <svg class="icon-svg" style="width: 20px; height: 20px;" viewBox="0 0 24 24">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                        <polyline points="16 6 12 2 8 6"></polyline>
+                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                    </svg>
+                    <svg class="icon-svg" style="width: 20px; height: 20px;" viewBox="0 0 24 24">
+                        <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
+                        <line x1="7" y1="10" x2="17" y2="10"></line>
+                        <line x1="7" y1="14" x2="13" y2="14"></line>
+                    </svg>
                 </div>
             </div>
-            <div class="gallery-text">Foto-Foto</div>
-        </div>
-        <!-- ITEM BIASA -->
-        <div class="gallery-item">
-            <img src="lia.png" alt="">
-            <div class="gallery-text">After Movie</div>
-        </div>
-        <div class="gallery-item">
-            <img src="liaa.png" alt="">
-            <div class="gallery-text">OST</div>
         </div>
     </section>
-    <!-- GALERY ARSYATERA END -->
+    <!-- SECRETO END -->
+
     <!-- FOOTER START -->
     <footer class="footer">
-        <p>2026 ARSYATERA footerrrrr</p>
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="Logo Pure.svg" alt="Logo Arsyatera Footer" onerror="this.onerror=null; this.src='https://placehold.co/100?text=Logo&bg=white'">
+            </div>
+            <div class="footer-contact">
+                <h4>Find Us</h4>
+                <ul>
+                    <li>
+                        <svg class="icon-svg-small" viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                        @arsyatera
+                    </li>
+                    <li>
+                        <svg class="icon-svg-small" viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        arsyatera@gmail.com
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2026 ARSYATERA - All right reserved</p>
+        </div>
     </footer>
     <!-- FOOTER END -->
-    <script src="script.js"></script>
+
+    <script>
+        // Logika Navbar yang Muncul ketika discroll
+        const navbar = document.querySelector(".navbar");
+        const home = document.querySelector(".home");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > home.offsetHeight - 50) {
+                navbar.classList.add("active");
+            } else {
+                navbar.classList.remove("active");
+            }
+        });
+
+        // Logika Carousel Drag
+        document.addEventListener("DOMContentLoaded", () => {
+            const track = document.querySelector(".inner-track");
+            const carousel = document.querySelector(".inner-carousel");
+
+            if (!track || !carousel) return;
+
+            let isDragging = false;
+            let startX = 0;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
+            let index = 0;
+
+            const slideCount = track.children.length;
+            const slideWidth = carousel.offsetWidth;
+
+            carousel.addEventListener("mousedown", startDrag);
+            window.addEventListener("mouseup", endDrag);
+            window.addEventListener("mousemove", drag);
+
+            carousel.addEventListener("touchstart", startDrag);
+            carousel.addEventListener("touchend", endDrag);
+            carousel.addEventListener("touchmove", drag);
+
+            function startDrag(e) {
+                isDragging = true;
+                startX = getPositionX(e);
+                carousel.style.cursor = "grabbing";
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                const currentX = getPositionX(e);
+                currentTranslate = prevTranslate + currentX - startX;
+                track.style.transform = `translateX(${currentTranslate}px)`;
+            }
+
+            function endDrag() {
+                if (!isDragging) return;
+                isDragging = false;
+                const movedBy = currentTranslate - prevTranslate;
+
+                if (movedBy < -100 && index < slideCount - 1) index++;
+                if (movedBy > 100 && index > 0) index--;
+
+                setPositionByIndex();
+                carousel.style.cursor = "grab";
+            }
+
+            function setPositionByIndex() {
+                currentTranslate = -index * slideWidth;
+                prevTranslate = currentTranslate;
+                track.style.transition = "transform 0.3s ease";
+                track.style.transform = `translateX(${currentTranslate}px)`;
+
+                setTimeout(() => {
+                    track.style.transition = "none";
+                }, 300);
+            }
+
+            function getPositionX(e) {
+                return e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
+            }
+        });
+    </script>
 </body>
-
-
 </html>
-
-
-
