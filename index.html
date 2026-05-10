@@ -9,9 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
-        /* ======================== 
-           GENERAL SETTING 
-           ======================== */
+/* ======================== GENERAL SETTING ======================== */
         * {
             margin: 0;
             padding: 0;
@@ -28,9 +26,7 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* ======================== 
-           HOME
-           ======================== */
+/* ======================== HOME ======================== */
         .home {
             background: url('home-foto-angkatan.png') center/cover no-repeat, linear-gradient(135deg, #7a0c1f, #a3162b);
             height: 100vh;
@@ -41,10 +37,8 @@
         }
 
         .hero-content {
-            max-width: 900px; /* Sedikit diperlebar agar cukup ruang untuk 1 baris */
-            color: white;
+            max-width: 900px;
             text-align: left;
-            margin-top: 50px;
         }
 
         .hero-badge {
@@ -66,9 +60,8 @@
             font-size: 64px;
             font-weight: 700;
             line-height: 1.2;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             color: white;
-            white-space: nowrap; /* Mencegah teks turun ke baris baru */
         }
 
         .hero-subtitle {
@@ -92,14 +85,16 @@
                tapi kita usahakan sekecil mungkin agar tetap sebaris 
                atau Anda bisa menghapus white-space: nowrap khusus di HP jika terlalu kecil */
             .hero-title { 
-                font-size: 28px; 
-                white-space: nowrap; 
+                font-size: 36px; 
             }
         }
 
-        /* ======================== 
-           NAVBAR 
-           ======================== */
+        @media (max-width: 576px) {
+            /* Menyesuaikan ukuran font sedikit di layar menengah agar tetap 1 baris jika memungkinkan */
+            .hero-title { font-size: 28px; }
+        }
+
+/* ======================== NAVBAR ======================== */
         .navbar {
             background-color: #D0D0D0;
             display: flex;
@@ -133,9 +128,7 @@
             object-fit: contain;
         }
 
-        /* ======================== 
-           MEET OUR LEADER 
-           ======================== */
+/* ======================== MEET OUR LEADER ======================== */
         .meet-leader {
             padding: 100px 20px;
             background-color: #fbfbfb;
@@ -231,9 +224,7 @@
             .ml-text-scroll p { text-align: left; }
         }
 
-        /* ======================== 
-           AFTER MOVIE 
-           ======================== */
+/* ======================== AFTER MOVIE ======================== */
         .after-movie {
             padding: 80px 20px;
             text-align: center;
@@ -319,12 +310,10 @@
 
         @media (max-width: 768px) {
             .am-container { flex-direction: column; text-align: center; gap: 40px; }
-            .am-video-wrapper { width: 100%; height: 250px; }
+            .am-video-wrapper { max-width: 420px; width: 100%; min-height: 250px;}   
         }
 
-        /* ======================== 
-           THEME SONG 
-           ======================== */
+/* ======================== THEME SONG ======================== */
         .ts-theme-song {
             background: linear-gradient(135deg, #7a0c1f, #8e0e22);
             padding: 80px 20px 40px 20px;
@@ -460,9 +449,7 @@
             }
         }
 
-        /* ======================== 
-           TENTANG ARSYATERA 
-           ======================== */
+/* ======================== TENTANG ARSYATERA ======================== */
         .tentang {
             width: 100%;
         }
@@ -654,9 +641,7 @@
             }
         }
 
-        /* ======================== 
-           GALLERY 
-           ======================== */
+/* ======================== GALLERY ======================== */
         .gallery-section {
             background: linear-gradient(135deg, #8B182A, #5a0815);
             width: 100%;
@@ -686,9 +671,7 @@
             }
         }
 
-        /* ======================== 
-           SECRETO 
-           ======================== */
+/* ======================== SECRETO ======================== */
         .secreto-section {
             background: linear-gradient(135deg, #5a0815, #3a040d);
             width: 100%;
@@ -802,9 +785,7 @@
             .secreto-card { padding: 25px; }
         }
 
-        /* ======================== 
-           FOOTER 
-           ======================== */
+/* ======================== FOOTER ======================== */
         .footer {
             background-color: #ffffff;
             color: #333;
@@ -1034,8 +1015,8 @@
         <!-- Filosofi Nama -->
         <div class="filosofi-nama">
             <div class="fn-container">
-                <h2 class="fn-main-title">Tentang Arsyatera.</h2>
-                <p class="fn-subtitle">Iuventus pietas varenci ferventara.</p>
+                <h2 class="fn-main-title">Tentang Arsyatera</h2>
+                <p class="fn-subtitle">Iuventus pietas varenci ferventara</p>
                 
                 <h3 class="fn-heading">FILOSOFI NAMA</h3>
                 <p class="fn-lead">Generasi ke-15 Ma'had Al-Qalam yang merupakan puncak tertinggi tempat kami berlabuh dan berjuang bersama.</p>
@@ -1043,7 +1024,7 @@
                 <div class="fn-items">
                     <div class="fn-item">
                         <h3>Arsyatera</h3>
-                        <p>Arsy (Arasy) bermakna singgasana tertinggi, lambang dari tempat berlabuhnya asa dan berjuang bersama-sama. Sedangkan Tera terinspirasi dari kata "Ferventera" perpaduan antara Fervent (semangat yang berkobar) dan Tera (bintang). Sebuah jiwa yang menyala dalam setiap perjuangan yang menjadi cahaya penuntun di tengah kegelapan.</p>
+                        <p>Arsy (عرش) bermakna singgasana tertinggi, lambang dari tempat berlabuhnya asa dan berjuang bersama-sama. Sedangkan Tera terinspirasi dari kata "Ferventera" perpaduan antara Fervent (semangat yang berkobar) dan Tera (bintang). Sebuah jiwa yang menyala dalam setiap perjuangan yang menjadi cahaya penuntun di tengah kegelapan.</p>
                     </div>
                     <div class="fn-item">
                         <h3>Luvievar</h3>
@@ -1118,7 +1099,7 @@
     <!-- SECRETO START -->
     <section class="secreto-section">
         <div class="secreto-container">
-            <h2 class="secreto-title">ARSYATERA<br>SECRETO</h2>
+            <h2 class="secreto-title">Arsyatera's<br>Secreto</h2>
             <p class="secreto-subtitle">Our Moment</p>
             
             <div class="secreto-card">
