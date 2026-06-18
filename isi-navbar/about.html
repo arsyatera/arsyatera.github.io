@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Arsyatera</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+/* ======================== GENERAL SETTING ======================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: white;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            padding-top: 50px; /* Ruang untuk navbar fixed */
+        }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
+
+/* ======================== NAVBAR ======================== */
+        .navbar {
+            background-color: #D0D0D0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-navbar img { height: 45px; max-width: 100%; object-fit: contain; }
+        .nav-links { display: flex; list-style: none; gap: 45px; margin: 0; padding: 0; }
+        .nav-links a {
+            text-decoration: none;
+            color: #5a0815;
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover { color: #A3162B; }
+
+        @media (max-width: 768px) {
+            .navbar-container { padding: 10px 25px; }
+            .nav-links { gap: 20px; }
+            .nav-links a { font-size: 15px; }
+        }
+        @media (max-width: 576px) {
+            .navbar-container { flex-direction: column; gap: 15px; padding: 15px 20px; }
+            body { padding-top: 110px; }
+        }
+
+/* ======================== TENTANG ARSYATERA ======================== */
+        .tentang { width: 100%; }
+
+        .filosofi-nama {
+            background: linear-gradient(135deg, #7a0c1f, #8e0e22);
+            color: white;
+            padding: 40px 20px 80px 20px;
+            text-align: center;
+        }
+
+        .fn-container { max-width: 900px; margin: 0 auto; }
+
+        .fn-main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .fn-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 60px;
+        }
+
+        .fn-heading {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .fn-lead {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .fn-items { display: flex; flex-direction: column; gap: 30px; }
+        .fn-item h3 { font-size: 20px; margin-bottom: 10px; }
+        .fn-item p { font-size: 14px; line-height: 1.8; opacity: 0.9; }
+
+        .filosofi-logo {
+            background: white;
+            padding: 80px 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .fl-container { max-width: 1000px; margin: 0 auto; }
+        .fl-main-logo { width: 250px; height: auto; margin-bottom: 40px; }
+        .fl-title { font-size: 26px; font-weight: 700; margin-bottom: 50px; }
+
+        .fl-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .fl-item { display: flex; flex-direction: column; align-items: center; }
+        .fl-item img { width: 100px; height: 100px; object-fit: contain; margin-bottom: 20px; }
+        .fl-item h4 { font-size: 18px; margin-bottom: 15px; color: #111; }
+        .fl-item p { font-size: 14px; line-height: 1.7; color: #555; }
+
+        .fl-quote {
+            font-style: italic;
+            font-size: 16px;
+            font-weight: 600;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            color: #222;
+        }
+
+        .fl-colors { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; }
+        .color-item { display: flex; flex-direction: column; align-items: center; max-width: 300px; }
+        .color-circle { width: 70px; height: 70px; border-radius: 50%; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .color-raspberry { background-color: #8B1E3F; }
+        .color-teal { background-color: #0D3B3F; }
+        .color-hex { font-size: 14px; color: #444; margin-bottom: 5px; font-weight: 500; }
+        .color-item h4 { font-size: 16px; margin-bottom: 10px; text-transform: uppercase; }
+        .color-item p { font-size: 14px; line-height: 1.6; color: #555; }
+
+        @media (max-width: 768px) {
+            .fl-grid { grid-template-columns: 1fr; gap: 50px; }
+            .fl-colors { gap: 40px; flex-direction: column; align-items: center; }
+        }
+
+/* ======================== FOOTER ======================== */
+        .footer { background-color: #ffffff; color: #333; width: 100%; }
+        .footer-top {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px 20px;
+        }
+        .footer-logo img { width: 70px; height: auto; object-fit: contain; }
+        .footer-contact { text-align: left; }
+        .footer-contact h4 { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: #111; }
+        .footer-contact ul { list-style: none; padding: 0; }
+        .footer-contact li { display: flex; align-items: center; gap: 10px; font-size: 14px; margin-bottom: 10px; color: #333; font-weight: 500; }
+        .icon-svg-small { width: 18px; height: 18px; fill: none; stroke: #111; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .footer-bottom { border-top: 1px solid #e0e0e0; text-align: center; padding: 20px; }
+        .footer-bottom p { font-size: 13px; color: #555; font-weight: 500; }
+
+        @media (max-width: 768px) {
+            .footer-top { flex-direction: column; gap: 30px; text-align: center; }
+            .footer-contact { text-align: center; }
+            .footer-contact li { justify-content: center; }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../index.html" class="logo-navbar">
+                <img src="../Arsyatera.svg" alt="Logo Navbar" onerror="this.onerror=null; this.src='https://placehold.co/100x40?text=Logo&bg=white'">
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="secreto.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="tentang">
+        
+        <div class="filosofi-nama">
+            <div class="fn-container">
+                <h2 class="fn-main-title">Tentang Arsyatera</h2>
+                <p class="fn-subtitle">Iuventus pietas varenci ferventara</p>
+                
+                <h3 class="fn-heading">FILOSOFI NAMA</h3>
+                <p class="fn-lead">Generasi ke-15 Ma'had Al-Qalam yang merupakan puncak tertinggi tempat kami berlabuh dan berjuang bersama.</p>
+
+                <div class="fn-items">
+                    <div class="fn-item">
+                        <h3>Arsyatera</h3>
+                        <p>Arsy (عرش) bermakna singgasana tertinggi, lambang dari tempat berlabuhnya asa dan berjuang bersama-sama. Sedangkan Tera terinspirasi dari kata "Ferventera" perpaduan antara Fervent (semangat yang berkobar) dan Tera (bintang). Sebuah jiwa yang menyala dalam setiap perjuangan yang menjadi cahaya penuntun di tengah kegelapan.</p>
+                    </div>
+                    <div class="fn-item">
+                        <h3>Luvievar</h3>
+                        <p>Luvievar menjadi simbol rumah bagi jiwa yang bersemangat dan taat. Tempat di mana kebersamaan berpadu dalam rahmat-Nya. Luvietas yakni perpaduan antara "Iuventus" (pemuda) dan "Pietas" (ketaatan), melambangkan generasi yang berjiwa muda namun tetap taat pada petunjuk-Nya. Luvietas kemudian bergabung dengan kata Varanci yang berakar dari kata "Vastu" (rumah) dan "Querencia" (tempat nyaman), menggambarkan tempat kembali bersandar, menemukan arah, dan meneguhkan langkah.</p>
+                    </div>
+                    <div class="fn-item">
+                        <h3>Adhibrata</h3>
+                        <p>Adhibrata melambangkan keunggulan intelektual yang berpadu dengan kebijaksanaan. Sebuah jiwa yang menempatkan ilmu bukan sekadar pengetahuan, melainkan jalan menuju kemuliaan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filosofi-logo">
+            <div class="fl-container">
+                <img src="Logo Pure.svg" alt="Logo Arsyatera" class="fl-main-logo" onerror="this.onerror=null; this.src='https://placehold.co/250?text=Logo+Arsyatera&bg=white&color=a3162b'">
+                
+                <h3 class="fl-title">FILOSOFI LOGO</h3>
+
+                <div class="fl-grid">
+                    <div class="fl-item">
+                        <img src="Logo_Api.png" alt="Api di Atas" onerror="this.onerror=null; this.src='https://placehold.co/100?text=Api&bg=f5f5f5'">
+                        <h4>Api di Atas</h4>
+                        <p>Melambangkan semangat, cahaya perjuangan, dan niat yang menyala. Berbentuk menyerupai lafadz Allah, bermakna bahwa setiap langkah dan usaha Arsyatera diniatkan karena Allah semata.</p>
+                    </div>
+                    <div class="fl-item">
+                        <img src="Logo_Obor.png" alt="Obor di Tengah" onerror="this.onerror=null; this.src='https://placehold.co/100?text=Obor&bg=f5f5f5'">
+                        <h4>Obor di Tengah</h4>
+                        <p>Simbol prinsip dan keteguhan iman. Menjadi pusat keseimbangan antara idealisme dan realita, antara langit dan bumi.</p>
+                    </div>
+                    <div class="fl-item">
+                        <img src="Logo_Lingkaran.png" alt="Bentuk Lingkaran" onerror="this.onerror=null; this.src='https://placehold.co/100?text=Lingkaran&bg=f5f5f5'">
+                        <h4>Bentuk Lingkaran</h4>
+                        <p>Melambangkan kebersamaan, persatuan, dan ikatan antar anggota yang tetap berada dalam satu nilai dan tujuan meski tiap individu bergerak bebas.</p>
+                    </div>
+                </div>
+
+                <p class="fl-quote">"Logo Arsyatera mencerminkan angkatan yang berniat lurus karena Allah, bergerak dinamis dalam kebersamaan, dan berdiri kokoh pada prinsip"</p>
+
+                <div class="fl-colors">
+                    <div class="color-item">
+                        <div class="color-circle color-raspberry"></div>
+                        <span class="color-hex">#8B1E3F</span>
+                        <h4>Deep Raspberry</h4>
+                        <p>Simbol keberanian, semangat juang, dan keteguhan hati yang matang serta bertanggung jawab.</p>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-circle color-teal"></div>
+                        <span class="color-hex">#0D3B3F</span>
+                        <h4>Hijau Teal Gelap</h4>
+                        <p>Melambangkan ketenangan, harapan, dan pertumbuhan yang berlandaskan iman dan akhlak.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="Logo Pure.svg" alt="Logo Arsyatera Footer" onerror="this.onerror=null; this.src='https://placehold.co/100?text=Logo&bg=white'">
+            </div>
+            <div class="footer-contact">
+                <h4>Find Us</h4>
+                <ul>
+                    <li>
+                        <svg class="icon-svg-small" viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                        @arsyatera
+                    </li>
+                    <li>
+                        <svg class="icon-svg-small" viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        arsyatera@gmail.com
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2026 ARSYATERA - All right reserved</p>
+        </div>
+    </footer>
+    </body>
+</html>
