@@ -64,7 +64,6 @@
         .gallery-section {
             background: linear-gradient(135deg, #8B182A, #5a0815);
             width: 100%;
-            /* Dikurangi sedikit height-nya karena ada padding-top di body */
             min-height: calc(100vh - 50px); 
             display: flex;
             align-items: center;
@@ -101,7 +100,7 @@
             border-radius: 30px 30px 0 0;
             padding: 50px 20px;
             width: 100%;
-            margin-top: -30px; /* Menarik container menimpa background merah sedikit */
+            margin-top: -30px; 
             position: relative;
             z-index: 10;
             text-align: center;
@@ -110,7 +109,7 @@
         .photo-grid {
             max-width: 1000px;
             margin: 0 auto;
-            column-count: 4; /* 4 Kolom */
+            column-count: 4; 
             column-gap: 15px;
             padding-bottom: 40px;
         }
@@ -125,6 +124,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer; /* Indikator kursor bisa diklik */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
         }
 
         .photo-item img {
@@ -134,7 +140,6 @@
             display: block;
         }
 
-        /* Utility Class untuk slot foto sebelum ada gambar aslinya */
         .h-small { height: 120px; }
         .h-medium { height: 200px; }
         .h-large { height: 280px; }
@@ -158,12 +163,67 @@
             opacity: 0.9;
         }
 
-        @media (max-width: 900px) {
-            .photo-grid { column-count: 3; }
-        }
+        @media (max-width: 900px) { .photo-grid { column-count: 3; } }
         @media (max-width: 600px) {
             .photo-grid { column-count: 2; }
             .gallery-container-white { border-radius: 20px 20px 0 0; padding: 40px 15px; }
+        }
+
+/* ======================== POPUP LIGHTBOX (TAMBAHAN BARU) ======================== */
+        .modal-lightbox {
+            display: none; 
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Latar belakang gelap transparan */
+            overflow: hidden;
+            touch-action: none; /* Cegah scroll saat pinch-to-zoom */
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90vw;
+            max-height: 90vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.1s ease-out; /* Smooth saat dizoom pakai keyboard */
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 45px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        .close-btn:hover, .close-btn:focus {
+            color: #A3162B;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .zoom-hint {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            pointer-events: none;
         }
 
 /* ======================== FOOTER ======================== */
@@ -216,27 +276,7 @@
     <!-- GALLERY GRID (MASONRY) -->
     <section class="gallery-container-white">
         <div class="photo-grid">
-            <!-- Kolom foto masonry, hapus tulisan h-medium / h-small / h-large saat kamu sudah menyisipkan tag <img> asli nantinya -->
-            <div class="photo-item h-medium"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
-            <div class="photo-item h-medium"></div>
-
-            <div class="photo-item h-large"></div>
-            <div class="photo-item h-medium"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
-
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-medium"></div>
-
-            <div class="photo-item h-medium"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
-            <div class="photo-item h-small"></div>
-
+            <!-- Kolom foto masonry -->
             <div class="photo-item h-medium"></div>
             <div class="photo-item h-small"></div>
             <div class="photo-item h-large"></div>
@@ -258,7 +298,6 @@
             <div class="photo-item h-small"></div>
         </div>
 
-        <!-- Tombol Find More -->
         <a href="#" class="gallery-btn">Find More</a>
     </section>
 
@@ -293,5 +332,119 @@
             <p>Copyright © 2026 ARSYATERA - All right reserved</p>
         </div>
     </footer>
+
+    <!-- POPUP LIGHTBOX CONTAINER (HTML TAMBAHAN) -->
+    <div id="lightboxModal" class="modal-lightbox">
+        <span class="close-btn">&times;</span>
+        <img class="modal-content" id="lightboxImg">
+        <div class="zoom-hint">Tekan '+' / '-' atau gunakan dua jari untuk Zoom</div>
+    </div>
+
+    <!-- LOGIKA JAVASCRIPT UNTUK POPUP DAN ZOOM (TAMBAHAN) -->
+    <script>
+        const modal = document.getElementById("lightboxModal");
+        const modalImg = document.getElementById("lightboxImg");
+        const closeBtn = document.querySelector(".close-btn");
+        const photoItems = document.querySelectorAll(".photo-item");
+
+        let currentScale = 1;
+        let startDistance = 0;
+        let startScale = 1;
+
+        // 1. Munculkan pop-up saat foto di-tap
+        photoItems.forEach(item => {
+            item.addEventListener("click", function() {
+                modal.style.display = "block";
+                
+                // Ambil gambar di dalam kotak
+                const img = this.querySelector("img");
+                if (img) {
+                    modalImg.src = img.src;
+                } else {
+                    // Gambar dummy jika belum ada foto
+                    modalImg.src = "https://placehold.co/800x1000?text=Preview+Foto&bg=333&textColor=fff";
+                }
+                
+                resetZoom();
+            });
+        });
+
+        // 2. Fungsi Menutup Modal
+        function closeModal() {
+            modal.style.display = "none";
+            resetZoom();
+        }
+
+        // 3. Tekan tanda silang (X)
+        closeBtn.addEventListener("click", closeModal);
+
+        // 4. Tekan layar di luar area foto
+        modal.addEventListener("click", function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Fungsi Terapkan dan Reset Zoom
+        function resetZoom() {
+            currentScale = 1;
+            applyZoom();
+        }
+
+        function applyZoom() {
+            modalImg.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+        }
+
+        // 5. Fitur Zoom menggunakan Keyboard (+ dan -)
+        document.addEventListener("keydown", function(e) {
+            if (modal.style.display === "block") {
+                if (e.key === "Escape") {
+                    closeModal();
+                } else if (e.key === "+" || e.key === "=") {
+                    currentScale = Math.min(currentScale + 0.2, 5); // Max zoom 5x
+                    applyZoom();
+                } else if (e.key === "-") {
+                    currentScale = Math.max(currentScale - 0.2, 0.5); // Min zoom 0.5x
+                    applyZoom();
+                }
+            }
+        });
+
+        // 6. Fitur Zoom menggunakan Layar Sentuh (Cubit/Pinch)
+        modal.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                startDistance = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+                startScale = currentScale;
+            }
+        });
+
+        modal.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2) {
+                e.preventDefault(); // Mencegah halaman utama ikut tergeser (scroll)
+                const currentDistance = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+                
+                const scaleModifier = currentDistance / startDistance;
+                currentScale = Math.max(0.5, Math.min(startScale * scaleModifier, 5));
+                applyZoom();
+            }
+        }, { passive: false });
+
+        // Bonus: Zoom bisa pakai roda Mouse (Scroll) jika buka di komputer
+        modal.addEventListener("wheel", (e) => {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                currentScale = Math.min(currentScale + 0.1, 5); // Scroll atas untuk Zoom In
+            } else {
+                currentScale = Math.max(currentScale - 0.1, 0.5); // Scroll bawah untuk Zoom Out
+            }
+            applyZoom();
+        }, { passive: false });
+    </script>
 </body>
 </html>
