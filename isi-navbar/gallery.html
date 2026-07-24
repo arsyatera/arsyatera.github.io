@@ -124,7 +124,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer; /* Indikator kursor bisa diklik */
+            cursor: pointer; 
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
@@ -169,7 +169,7 @@
             .gallery-container-white { border-radius: 20px 20px 0 0; padding: 40px 15px; }
         }
 
-/* ======================== POPUP LIGHTBOX (TAMBAHAN BARU) ======================== */
+/* ======================== POPUP LIGHTBOX ======================== */
         .modal-lightbox {
             display: none; 
             position: fixed;
@@ -178,9 +178,9 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* Latar belakang gelap transparan */
+            background-color: rgba(0, 0, 0, 0.85);
             overflow: hidden;
-            touch-action: none; /* Cegah scroll saat pinch-to-zoom */
+            touch-action: none; 
         }
 
         .modal-content {
@@ -192,10 +192,14 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(1);
-            transition: transform 0.1s ease-out; /* Smooth saat dizoom pakai keyboard */
             object-fit: contain;
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            cursor: grab; 
+        }
+
+        .modal-content:active {
+            cursor: grabbing; 
         }
 
         .close-btn {
@@ -227,7 +231,14 @@
         }
 
 /* ======================== FOOTER ======================== */
-        .footer { background-color: #ffffff; color: #333; width: 100%; }
+        .footer { 
+            background-color: #ffffff; 
+            color: #333; 
+            width: 100%; 
+            position: relative; /* Ditambahkan */
+            z-index: 15; /* Ditambahkan agar footer ada di atas container putih */
+            box-shadow: 0 -25px 40px -10px rgba(0, 0, 0, 0.15); /* Ditambahkan untuk efek gradasi ke atas */
+        }
         .footer-top {
             max-width: 800px; margin: 0 auto; display: flex;
             justify-content: space-between; align-items: center; padding: 50px 20px;
@@ -353,21 +364,30 @@
         </div>
     </footer>
 
-    <!-- POPUP LIGHTBOX CONTAINER (HTML TAMBAHAN) -->
+    <!-- POPUP LIGHTBOX CONTAINER -->
     <div id="lightboxModal" class="modal-lightbox">
         <span class="close-btn">&times;</span>
         <img class="modal-content" id="lightboxImg">
-        <div class="zoom-hint">Tekan '+' / '-' atau gunakan dua jari untuk Zoom</div>
+        <div class="zoom-hint">Geser & Tekan '+' / '-' atau cubit untuk Zoom</div>
     </div>
 
-    <!-- LOGIKA JAVASCRIPT UNTUK POPUP DAN ZOOM (TAMBAHAN) -->
+    <!-- LOGIKA JAVASCRIPT UNTUK POPUP, ZOOM, DAN DRAG -->
     <script>
         const modal = document.getElementById("lightboxModal");
         const modalImg = document.getElementById("lightboxImg");
         const closeBtn = document.querySelector(".close-btn");
         const photoItems = document.querySelectorAll(".photo-item");
 
+        // Variabel untuk Zoom & Pan (Geser)
         let currentScale = 1;
+        let currentX = 0;
+        let currentY = 0;
+
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+
+        let isPinching = false;
         let startDistance = 0;
         let startScale = 1;
 
@@ -381,18 +401,17 @@
                 if (img) {
                     modalImg.src = img.src;
                 } else {
-                    // Gambar dummy jika belum ada foto
                     modalImg.src = "https://placehold.co/800x1000?text=Preview+Foto&bg=333&textColor=fff";
                 }
                 
-                resetZoom();
+                resetTransform();
             });
         });
 
         // 2. Fungsi Menutup Modal
         function closeModal() {
             modal.style.display = "none";
-            resetZoom();
+            resetTransform();
         }
 
         // 3. Tekan tanda silang (X)
@@ -405,57 +424,108 @@
             }
         });
 
-        // Fungsi Terapkan dan Reset Zoom
-        function resetZoom() {
+        // ================== FUNGSI UTAMA ZOOM & GESER ==================
+        function resetTransform() {
             currentScale = 1;
-            applyZoom();
+            currentX = 0;
+            currentY = 0;
+            applyTransform(false);
         }
 
-        function applyZoom() {
-            modalImg.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+        // smooth = true untuk zoom via scroll/keyboard, false saat sedang di-drag
+        function applyTransform(smooth = false) {
+            if (smooth) {
+                modalImg.style.transition = "transform 0.2s ease-out";
+            } else {
+                modalImg.style.transition = "none";
+            }
+            // Menerapkan skala dan posisi X, Y secara bersamaan
+            modalImg.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px)) scale(${currentScale})`;
         }
 
-        // 5. Fitur Zoom menggunakan Keyboard (+ dan -)
+        // ================== DRAG MENGGUNAKAN MOUSE (DESKTOP) ==================
+        modalImg.addEventListener("mousedown", (e) => {
+            e.preventDefault(); // Mencegah bawaan drag browser
+            isDragging = true;
+            // Catat selisih awal antara posisi mouse dan posisi gambar
+            startX = e.clientX - currentX;
+            startY = e.clientY - currentY;
+        });
+
+        window.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+            currentX = e.clientX - startX;
+            currentY = e.clientY - startY;
+            applyTransform(false); // Tanpa smooth transisi agar instan mengikuti mouse
+        });
+
+        window.addEventListener("mouseup", () => {
+            isDragging = false;
+        });
+
+        // ================== ZOOM MENGGUNAKAN KEYBOARD (+ / -) ==================
         document.addEventListener("keydown", function(e) {
             if (modal.style.display === "block") {
                 if (e.key === "Escape") {
                     closeModal();
                 } else if (e.key === "+" || e.key === "=") {
                     currentScale = Math.min(currentScale + 0.2, 5); // Max zoom 5x
-                    applyZoom();
+                    applyTransform(true);
                 } else if (e.key === "-") {
                     currentScale = Math.max(currentScale - 0.2, 0.5); // Min zoom 0.5x
-                    applyZoom();
+                    applyTransform(true);
                 }
             }
         });
 
-        // 6. Fitur Zoom menggunakan Layar Sentuh (Cubit/Pinch)
-        modal.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 2) {
+        // ================== GESTUR LAYAR SENTUH (PAN & PINCH) ==================
+        modalImg.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                // Satu jari -> Pan (Geser)
+                isDragging = true;
+                startX = e.touches[0].clientX - currentX;
+                startY = e.touches[0].clientY - currentY;
+            } else if (e.touches.length === 2) {
+                // Dua jari -> Pinch (Zoom)
+                isPinching = true;
+                isDragging = false;
                 startDistance = Math.hypot(
                     e.touches[0].pageX - e.touches[1].pageX,
                     e.touches[0].pageY - e.touches[1].pageY
                 );
                 startScale = currentScale;
             }
-        });
+        }, { passive: false });
 
-        modal.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 2) {
-                e.preventDefault(); // Mencegah halaman utama ikut tergeser (scroll)
+        modalImg.addEventListener('touchmove', (e) => {
+            e.preventDefault(); // Mencegah layar website ketarik saat digeser
+            if (e.touches.length === 1 && isDragging) {
+                // Proses Pan
+                currentX = e.touches[0].clientX - startX;
+                currentY = e.touches[0].clientY - startY;
+                applyTransform(false);
+            } else if (e.touches.length === 2 && isPinching) {
+                // Proses Zoom
                 const currentDistance = Math.hypot(
                     e.touches[0].pageX - e.touches[1].pageX,
                     e.touches[0].pageY - e.touches[1].pageY
                 );
-                
                 const scaleModifier = currentDistance / startDistance;
                 currentScale = Math.max(0.5, Math.min(startScale * scaleModifier, 5));
-                applyZoom();
+                applyTransform(false);
             }
         }, { passive: false });
 
-        // Bonus: Zoom bisa pakai roda Mouse (Scroll) jika buka di komputer
+        modalImg.addEventListener('touchend', (e) => {
+            if (e.touches.length < 2) {
+                isPinching = false;
+            }
+            if (e.touches.length === 0) {
+                isDragging = false;
+            }
+        });
+
+        // ================== ZOOM PAKAI RODA MOUSE (SCROLL) ==================
         modal.addEventListener("wheel", (e) => {
             e.preventDefault();
             if (e.deltaY < 0) {
@@ -463,7 +533,7 @@
             } else {
                 currentScale = Math.max(currentScale - 0.1, 0.5); // Scroll bawah untuk Zoom Out
             }
-            applyZoom();
+            applyTransform(true); // Pakai transisi smooth
         }, { passive: false });
     </script>
 </body>
