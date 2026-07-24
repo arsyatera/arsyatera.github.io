@@ -56,6 +56,10 @@
             .fl-grid { grid-template-columns: 1fr; gap: 50px; }
             .fl-colors { gap: 40px; flex-direction: column; align-items: center; }
         }
+        @media (max-width: 576px) {
+            .navbar-container { flex-direction: column; gap: 15px; padding: 15px 20px; }
+            body { padding-top: 110px; }
+        }
 
 /* ======================== CONTACT SECTION ======================== */
         .contact-section {
@@ -202,8 +206,8 @@
             </a>
             <ul class="nav-links">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="about.html">About</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="secreto.html">Secreto</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
