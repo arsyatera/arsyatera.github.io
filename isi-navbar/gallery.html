@@ -60,6 +60,7 @@
             .navbar-container { flex-direction: column; gap: 15px; padding: 15px 20px; }
             body { padding-top: 110px; }
         }
+
 /* ======================== GALLERY BANNER ======================== */
         .gallery-section {
             background: linear-gradient(135deg, #8B182A, #5a0815);
@@ -94,7 +95,7 @@
             .gallery-section { min-height: calc(50vh - 110px); }
         }
 
-/* ======================== GALLERY GRID (MASONRY) ======================== */
+/* ======================== GALLERY GRID (FLEXBOX ALIGNED) ======================== */
         .gallery-container-white {
             background-color: white;
             border-radius: 30px 30px 0 0;
@@ -107,25 +108,32 @@
         }
 
         .photo-grid {
+            display: flex;
+            gap: 15px;
             max-width: 1000px;
             margin: 0 auto;
-            column-count: 4; 
-            column-gap: 15px;
             padding-bottom: 40px;
         }
 
+        .photo-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
         .photo-item {
-            background-color: #d9d9d9;
+            background-color: #e5e5e5;
             border-radius: 12px;
-            border: 1px solid #777;
-            margin-bottom: 15px;
-            break-inside: avoid;
+            border: 1px solid #aaa;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer; 
             transition: transform 0.2s, box-shadow 0.2s;
+            position: relative; 
+            width: 100%;
         }
 
         .photo-item:hover {
@@ -133,16 +141,34 @@
             box-shadow: 0 8px 15px rgba(0,0,0,0.2);
         }
 
+        .slot-number {
+            position: absolute;
+            font-size: 32px;
+            font-weight: 700;
+            color: #999;
+            z-index: 1; 
+            font-family: 'Montserrat', sans-serif;
+        }
+
         .photo-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            position: relative;
+            z-index: 2; 
         }
 
-        .h-small { height: 120px; }
-        .h-medium { height: 200px; }
-        .h-large { height: 280px; }
+        /* Tinggi spesifik per blok */
+        .h-1 { height: 150px; }
+        .h-2 { height: 160px; }
+        .h-3 { height: 200px; }
+        .h-4 { height: 225px; }
+        .h-5 { height: 250px; }
+        .h-6 { height: 300px; }
+        .h-7 { height: 325px; }
+        .h-8 { height: 350px; }
+        .h-9 { height: 375px; }
 
         .gallery-btn {
             background-color: #8B1E3F;
@@ -163,10 +189,17 @@
             opacity: 0.9;
         }
 
-        @media (max-width: 900px) { .photo-grid { column-count: 3; } }
-        @media (max-width: 600px) {
-            .photo-grid { column-count: 2; }
-            .gallery-container-white { border-radius: 20px 20px 0 0; padding: 40px 15px; }
+        @media (max-width: 768px) {
+            .photo-grid {
+                display: block;
+                column-count: 2;
+                column-gap: 15px;
+            }
+            .photo-column { display: contents; }
+            .photo-item {
+                break-inside: avoid;
+                margin-bottom: 15px; 
+            }
         }
 
 /* ======================== POPUP LIGHTBOX ======================== */
@@ -198,11 +231,9 @@
             cursor: grab; 
         }
 
-        .modal-content:active {
-            cursor: grabbing; 
-        }
+        .modal-content:active { cursor: grabbing; }
 
-        .close-btn {
+        .close-btn-lightbox {
             position: absolute;
             top: 20px;
             right: 35px;
@@ -214,11 +245,7 @@
             z-index: 10000;
         }
 
-        .close-btn:hover, .close-btn:focus {
-            color: #A3162B;
-            text-decoration: none;
-            cursor: pointer;
-        }
+        .close-btn-lightbox:hover, .close-btn-lightbox:focus { color: #A3162B; }
 
         .zoom-hint {
             position: absolute;
@@ -235,9 +262,9 @@
             background-color: #ffffff; 
             color: #333; 
             width: 100%; 
-            position: relative; /* Ditambahkan */
-            z-index: 15; /* Ditambahkan agar footer ada di atas container putih */
-            box-shadow: 0 -25px 40px -10px rgba(0, 0, 0, 0.15); /* Ditambahkan untuk efek gradasi ke atas */
+            position: relative; 
+            z-index: 15; 
+            box-shadow: 0 -25px 40px -10px rgba(0, 0, 0, 0.15); 
         }
         .footer-top {
             max-width: 800px; margin: 0 auto; display: flex;
@@ -285,49 +312,51 @@
         </div>
     </section>
 
-    <!-- GALLERY GRID (MASONRY) -->
+    <!-- GALLERY GRID (MASONRY 25 SLOT - FLEXBOX ALIGNED) -->
     <section class="gallery-container-white">
         <div class="photo-grid">
-            <!-- Kolom foto masonry -->
-            <div class="photo-item h-medium"><img src="foto1" alt="Galeri 1"></div>
-            <div class="photo-item h-small"><img src="foto2" alt="Galeri 2"></div>
-            <div class="photo-item h-large"><img src="foto3" alt="Galeri 3"></div>
-            <div class="photo-item h-medium"><img src="foto4" alt="Galeri 4"></div>
+            
+            <!-- Kolom 1 -->
+            <div class="photo-column">
+                <div class="photo-item h-3"><span class="slot-number">1</span><img src="https://drive.google.com/thumbnail?id=1-qKMno9apNyKDJOQbp1DmOE-ct47UU3b&sz=w1000" alt="Galeri 1" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-3"><span class="slot-number">5</span><img src="https://drive.google.com/thumbnail?id=15-VKOO-HoNoo7Oe3J5kjyH76YXa8O8NV&sz=w1000" alt="Galeri 5" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-6"><span class="slot-number">9</span><img src="https://drive.google.com/thumbnail?id=1Ev0YOiHw-Q8KWOb1dNu2tubrqFDtZfpb&sz=w1000" alt="Galeri 9" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-5"><span class="slot-number">13</span><img src="https://drive.google.com/thumbnail?id=1LZT1Em2qxrKPULb4yQrDnPZFJApeOwXc&sz=w1000" alt="Galeri 13" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-5"><span class="slot-number">17</span><img src="https://drive.google.com/thumbnail?id=1avt1QKX_mEhiByVk4umqN81AK0VrgPDW&sz=w1000" alt="Galeri 17" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-7"><span class="slot-number">21</span><img src="https://drive.google.com/thumbnail?id=1lOAFFyI8RDI5x6z9w2qcKhfiDCT5CK8E&sz=w1000" alt="Galeri 21" onerror="this.style.display='none'"></div>
+            </div>
 
-            <div class="photo-item h-large"><img src="foto5" alt="Galeri 5"></div>
-            <div class="photo-item h-medium"><img src="foto6" alt="Galeri 6"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
+            <!-- Kolom 2 -->
+            <div class="photo-column">
+                <div class="photo-item h-1"><span class="slot-number">2</span><img src="https://drive.google.com/thumbnail?id=10gBIBrjAS0-2cHzrgDRTVJqTp4huUSYT&sz=w1000" alt="Galeri 2" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-1"><span class="slot-number">6</span><img src="https://drive.google.com/thumbnail?id=15eW7kOz65oUaVI6FZm96XoSMyeosGRHl&sz=w1000" alt="Galeri 6" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-8"><span class="slot-number">10</span><img src="https://drive.google.com/thumbnail?id=1HgH_fPZrwsgCUj5hIaRmaAAYoaI9QUnJ&sz=w1000" alt="Galeri 10" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-1"><span class="slot-number">14</span><img src="https://drive.google.com/thumbnail?id=1NXniyVTKHqGiYE6apqz0nFZrwqZboKyu&sz=w1000" alt="Galeri 14" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-3"><span class="slot-number">18</span><img src="https://drive.google.com/thumbnail?id=1fKjgXcNN9rBj8RrMJuxG_2pn2KsEwQut&sz=w1000" alt="Galeri 18" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-8"><span class="slot-number">22</span><img src="https://drive.google.com/thumbnail?id=1m95BpWt5Hzf3ggVeky9j3b8najMyiOiS&sz=w1000" alt="Galeri 22" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-2"><span class="slot-number">23</span><img src="https://drive.google.com/thumbnail?id=1nqfdupSFAruZgjpbgOjf_t5A47zjSLF6&sz=w1000" alt="Galeri 23" onerror="this.style.display='none'"></div>
+            </div>
 
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-medium"></div>
+            <!-- Kolom 3 -->
+            <div class="photo-column">
+                <div class="photo-item h-1"><span class="slot-number">3</span><img src="https://drive.google.com/thumbnail?id=13Ukccaj_YSgcKM1vzPnfASCptoH-4ZsC&sz=w1000" alt="Galeri 3" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-8"><span class="slot-number">7</span><img src="https://drive.google.com/thumbnail?id=17_Ons7M5dVVGAi1Kg1YpAJzFMlhsYHC-&sz=w1000" alt="Galeri 7" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-1"><span class="slot-number">11</span><img src="https://drive.google.com/thumbnail?id=1IMXhogBUd59pf003ldGBUgX5PD_EG0l2&sz=w1000" alt="Galeri 11" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-8"><span class="slot-number">15</span><img src="https://drive.google.com/thumbnail?id=1Sb8KB-TeOI1FtykBw_ryUr2PM8ObHAoq&sz=w1000" alt="Galeri 15" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-1"><span class="slot-number">19</span><img src="https://drive.google.com/thumbnail?id=1fXUaucINER9sKWfqMkRT_dcHjBQE0XdA&sz=w1000" alt="Galeri 19" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-9"><span class="slot-number">24</span><img src="https://drive.google.com/thumbnail?id=1tawga-0-MbsaSeCV8v60TKJtpNKBOeZs&sz=w1000" alt="Galeri 24" onerror="this.style.display='none'"></div>
+            </div>
 
-            <div class="photo-item h-medium"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
-            <div class="photo-item h-small"></div>
+            <!-- Kolom 4 -->
+            <div class="photo-column">
+                <div class="photo-item h-6"><span class="slot-number">4</span><img src="https://drive.google.com/thumbnail?id=13jEqwma_XLJ5jrxSJZAQBHQiPDrqf99P&sz=w1000" alt="Galeri 4" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-3"><span class="slot-number">8</span><img src="https://drive.google.com/thumbnail?id=1DiPfwDJtFny1sPMI3Kmf_FUrvstK0m1s&sz=w1000" alt="Galeri 8" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-6"><span class="slot-number">12</span><img src="https://drive.google.com/thumbnail?id=1KhIag0jFX5f7nqidUzGECIeVTf-UewrX&sz=w1000" alt="Galeri 12" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-3"><span class="slot-number">16</span><img src="https://drive.google.com/thumbnail?id=1UG4IIvmb2iROSqiYg5V7VILWuLmFOfnx&sz=w1000" alt="Galeri 16" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-6"><span class="slot-number">20</span><img src="https://drive.google.com/thumbnail?id=1idnVZ6cMlj3m-eKA2bBw9znZwoHXq73b&sz=w1000" alt="Galeri 20" onerror="this.style.display='none'"></div>
+                <div class="photo-item h-4"><span class="slot-number">25</span><img src="https://drive.google.com/thumbnail?id=1y69PhIVMtMHB7OtnqOttN_1rvYj41c2N&sz=w1000" alt="Galeri 25" onerror="this.style.display='none'"></div>
+            </div>
 
-            <div class="photo-item h-medium"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
-            <div class="photo-item h-medium"></div>
-
-            <div class="photo-item h-large"></div>
-            <div class="photo-item h-medium"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
-
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-medium"></div>
-
-            <div class="photo-item h-medium"></div>
-            <div class="photo-item h-small"></div>
-            <div class="photo-item h-large"></div>
-            <div class="photo-item h-small"></div>
         </div>
 
         <a href="#" class="gallery-btn">Find More</a>
@@ -367,7 +396,7 @@
 
     <!-- POPUP LIGHTBOX CONTAINER -->
     <div id="lightboxModal" class="modal-lightbox">
-        <span class="close-btn">&times;</span>
+        <span class="close-btn-lightbox" id="closeBtnLightbox">&times;</span>
         <img class="modal-content" id="lightboxImg">
         <div class="zoom-hint">Geser & Tekan '+' / '-' atau cubit untuk Zoom</div>
     </div>
@@ -376,7 +405,7 @@
     <script>
         const modal = document.getElementById("lightboxModal");
         const modalImg = document.getElementById("lightboxImg");
-        const closeBtn = document.querySelector(".close-btn");
+        const closeBtnLightbox = document.getElementById("closeBtnLightbox");
         const photoItems = document.querySelectorAll(".photo-item");
 
         // Variabel untuk Zoom & Pan (Geser)
@@ -395,16 +424,13 @@
         // 1. Munculkan pop-up saat foto di-tap
         photoItems.forEach(item => {
             item.addEventListener("click", function() {
-                modal.style.display = "block";
-                
-                // Ambil gambar di dalam kotak
                 const img = this.querySelector("img");
-                if (img) {
-                    modalImg.src = img.src;
-                } else {
-                    modalImg.src = "https://placehold.co/800x1000?text=Preview+Foto&bg=333&textColor=fff";
+                if (!img || img.style.display === 'none' || img.src === window.location.href) {
+                    return; 
                 }
-                
+
+                modal.style.display = "block";
+                modalImg.src = img.src;
                 resetTransform();
             });
         });
@@ -415,10 +441,8 @@
             resetTransform();
         }
 
-        // 3. Tekan tanda silang (X)
-        closeBtn.addEventListener("click", closeModal);
+        closeBtnLightbox.addEventListener("click", closeModal);
 
-        // 4. Tekan layar di luar area foto
         modal.addEventListener("click", function(e) {
             if (e.target === modal) {
                 closeModal();
@@ -433,22 +457,19 @@
             applyTransform(false);
         }
 
-        // smooth = true untuk zoom via scroll/keyboard, false saat sedang di-drag
         function applyTransform(smooth = false) {
             if (smooth) {
                 modalImg.style.transition = "transform 0.2s ease-out";
             } else {
                 modalImg.style.transition = "none";
             }
-            // Menerapkan skala dan posisi X, Y secara bersamaan
             modalImg.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px)) scale(${currentScale})`;
         }
 
         // ================== DRAG MENGGUNAKAN MOUSE (DESKTOP) ==================
         modalImg.addEventListener("mousedown", (e) => {
-            e.preventDefault(); // Mencegah bawaan drag browser
+            e.preventDefault(); 
             isDragging = true;
-            // Catat selisih awal antara posisi mouse dan posisi gambar
             startX = e.clientX - currentX;
             startY = e.clientY - currentY;
         });
@@ -457,7 +478,7 @@
             if (!isDragging) return;
             currentX = e.clientX - startX;
             currentY = e.clientY - startY;
-            applyTransform(false); // Tanpa smooth transisi agar instan mengikuti mouse
+            applyTransform(false); 
         });
 
         window.addEventListener("mouseup", () => {
@@ -470,10 +491,10 @@
                 if (e.key === "Escape") {
                     closeModal();
                 } else if (e.key === "+" || e.key === "=") {
-                    currentScale = Math.min(currentScale + 0.2, 5); // Max zoom 5x
+                    currentScale = Math.min(currentScale + 0.2, 5); 
                     applyTransform(true);
                 } else if (e.key === "-") {
-                    currentScale = Math.max(currentScale - 0.2, 0.5); // Min zoom 0.5x
+                    currentScale = Math.max(currentScale - 0.2, 0.5); 
                     applyTransform(true);
                 }
             }
@@ -482,12 +503,10 @@
         // ================== GESTUR LAYAR SENTUH (PAN & PINCH) ==================
         modalImg.addEventListener('touchstart', (e) => {
             if (e.touches.length === 1) {
-                // Satu jari -> Pan (Geser)
                 isDragging = true;
                 startX = e.touches[0].clientX - currentX;
                 startY = e.touches[0].clientY - currentY;
             } else if (e.touches.length === 2) {
-                // Dua jari -> Pinch (Zoom)
                 isPinching = true;
                 isDragging = false;
                 startDistance = Math.hypot(
@@ -499,14 +518,12 @@
         }, { passive: false });
 
         modalImg.addEventListener('touchmove', (e) => {
-            e.preventDefault(); // Mencegah layar website ketarik saat digeser
+            e.preventDefault(); 
             if (e.touches.length === 1 && isDragging) {
-                // Proses Pan
                 currentX = e.touches[0].clientX - startX;
                 currentY = e.touches[0].clientY - startY;
                 applyTransform(false);
             } else if (e.touches.length === 2 && isPinching) {
-                // Proses Zoom
                 const currentDistance = Math.hypot(
                     e.touches[0].pageX - e.touches[1].pageX,
                     e.touches[0].pageY - e.touches[1].pageY
@@ -530,11 +547,11 @@
         modal.addEventListener("wheel", (e) => {
             e.preventDefault();
             if (e.deltaY < 0) {
-                currentScale = Math.min(currentScale + 0.1, 5); // Scroll atas untuk Zoom In
+                currentScale = Math.min(currentScale + 0.1, 5); 
             } else {
-                currentScale = Math.max(currentScale - 0.1, 0.5); // Scroll bawah untuk Zoom Out
+                currentScale = Math.max(currentScale - 0.1, 0.5); 
             }
-            applyTransform(true); // Pakai transisi smooth
+            applyTransform(true); 
         }, { passive: false });
     </script>
 </body>
