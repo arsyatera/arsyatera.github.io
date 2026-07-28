@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arsyatera</title>
-    <!-- Import Google Fonts (Montserrat & Playfair Display untuk efek Serif pada judul) -->
+    <!-- Import Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
@@ -74,37 +74,30 @@
         }
 
         @media (max-width: 1024px) {
-            /* Menyesuaikan ukuran font sedikit di layar menengah agar tetap 1 baris jika memungkinkan */
             .hero-title { font-size: 50px; }
         }
 
         @media (max-width: 768px) {
             .home { padding: 0 5%; justify-content: center; text-align: center; }
             .hero-content { text-align: center; margin-top: 0; }
-            /* Pada layar HP, jika dipaksa nowrap mungkin terpotong, 
-               tapi kita usahakan sekecil mungkin agar tetap sebaris 
-               atau Anda bisa menghapus white-space: nowrap khusus di HP jika terlalu kecil */
-            .hero-title { 
-                font-size: 36px; 
-            }
+            .hero-title { font-size: 36px; }
         }
 
         @media (max-width: 576px) {
-            /* Menyesuaikan ukuran font sedikit di layar menengah agar tetap 1 baris jika memungkinkan */
             .hero-title { font-size: 28px; }
         }
 
-/* ======================== NAVBAR ======================== */
+/* ======================== NAVBAR ATAS ======================== */
         .navbar {
-            background-color: #D0D0D0; /* Warna dikembalikan seperti semula */
+            background-color: #D0D0D0;
             display: flex;
             justify-content: center;
             align-items: center;
             position: fixed;
-            top: 0; /* Menempel lurus di atas layar */
+            top: 0;
             left: 0;
             width: 100%;
-            opacity: 0;
+            opacity: 0; /* Muncul saat di-scroll */
             pointer-events: none;
             transition: 0.4s ease;
             z-index: 1000;
@@ -122,53 +115,139 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            /* Padding dibuat sangat minim agar ramping seperti di gambar */
+            padding: 5px 40px; 
         }
 
         .logo-navbar img {
-            height: 45px;
+            /* Tinggi logo disesuaikan agar tidak memaksa navbar melebar */
+            height: 35px;
             max-width: 100%;
             object-fit: contain;
         }
 
+        /* Tombol Hamburger */
+        .hamburger {
+            background: none;
+            border: none;
+            padding: 2px; /* Disesuaikan dengan navbar yang lebih tipis */
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px; /* Jarak antar garis diperkecil sedikit */
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger:hover {
+            transform: scale(1.05);
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px; /* Garis lebih pendek sedikit agar proporsional */
+            height: 3px;
+            background-color: #5a0815;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-container {
+                padding: 5px 25px;
+            }
+        }
+
+/* ======================== SIDEBAR (MENU KANAN) ======================== */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100vh;
+            background-color: #D0D0D0;
+            z-index: 1002;
+            padding: 40px 30px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+            transition: right 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .logo-sidebar img {
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 35px;
+            color: #5a0815;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #A3162B;
+        }
+
         .nav-links {
             display: flex;
+            flex-direction: column;
             list-style: none;
-            gap: 45px;
+            gap: 30px;
             margin: 0;
             padding: 0;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #5a0815; /* Warna teks tetap maroon menyesuaikan gambar */
+            color: #5a0815;
             font-family: 'Playfair Display', serif;
-            font-size: 17px;
+            font-size: 20px;
             font-weight: 700;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, padding-left 0.3s ease;
         }
 
         .nav-links a:hover {
             color: #A3162B;
-        }
-
-        /* Penyesuaian Responsif untuk Layar Menengah dan Kecil */
-        @media (max-width: 768px) {
-            .navbar-container {
-                padding: 10px 25px;
-            }
-            .nav-links {
-                gap: 20px;
-            }
-            .nav-links a {
-                font-size: 15px;
-            }
+            padding-left: 10px;
         }
 
         @media (max-width: 576px) {
-            .navbar-container {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px 20px;
+            .sidebar {
+                width: 100%;
+                right: -100%;
             }
         }
 
@@ -267,95 +346,6 @@
             .ml-content { text-align: center; }
             .ml-text-scroll p { text-align: left; }
         }
-
-/* ======================== AFTER MOVIE ======================== */
-        /* .after-movie {
-            padding: 80px 20px;
-            text-align: center;
-            background-color: white;
-        }
-
-        .am-main-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 36px;
-            color: #0b4b46;
-            font-weight: 700;
-            margin-bottom: 60px;
-        }
-
-        .am-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            text-align: left;
-        }
-
-        .am-video-wrapper {
-            flex: 1;
-            background: #e5e5e5;
-            height: 320px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #666;
-            font-weight: 600;
-            font-size: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            border: 1px solid #d0d0d0;
-        }
-
-        .am-content {
-            flex: 1;
-        }
-
-        .am-tag {
-            font-size: 12px;
-            color: #888;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .am-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 28px;
-            color: #0b4b46;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        .am-desc {
-            font-size: 15px;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 35px;
-        }
-
-        .am-btn {
-            background: #A3162B;
-            color: white;
-            padding: 14px 35px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            display: inline-block;
-            transition: transform 0.2s, opacity 0.2s;
-        }
-
-        .am-btn:hover {
-            transform: translateY(-3px);
-            opacity: 0.9;
-        }
-
-        @media (max-width: 768px) {
-            .am-container { flex-direction: column; text-align: center; gap: 40px; }
-            .am-video-wrapper { max-width: 420px; width: 100%; min-height: 250px;}   
-        } */
 
 /* ======================== THEME SONG ======================== */
         .ts-theme-song {
@@ -490,228 +480,6 @@
             .ts-image img {
                 width: 200px;
                 height: 200px;
-            }
-        }
-
-/* ======================== TENTANG ARSYATERA ======================== */
-        .tentang {
-            width: 100%;
-        }
-
-        /* Bagian Atas: Filosofi Nama */
-        .filosofi-nama {
-            background: linear-gradient(135deg, #7a0c1f, #8e0e22);
-            color: white;
-            padding: 40px 20px 80px 20px;
-            text-align: center;
-        }
-
-        .fn-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .fn-main-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .fn-subtitle {
-            font-family: 'Montserrat', sans-serif;
-            font-style: normal;
-            font-size: 18px;
-            font-weight: 400;
-            opacity: 0.9;
-            margin-bottom: 60px;
-            letter-spacing: 0.5px;
-        }
-
-        .fn-heading {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-        }
-
-        .fn-lead {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            font-weight: 600;
-        }
-
-        .fn-items {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .fn-item h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .fn-item p {
-            font-size: 14px;
-            line-height: 1.8;
-            opacity: 0.9;
-        }
-
-        /* Bagian Bawah: Filosofi Logo & Warna */
-        .filosofi-logo {
-            background: white;
-            padding: 80px 20px;
-            text-align: center;
-            color: #333;
-        }
-
-        .fl-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .fl-main-logo {
-            width: 250px;
-            height: auto;
-            margin-bottom: 40px;
-        }
-
-        .fl-title {
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 50px;
-            letter-spacing: 1px;
-        }
-
-        .fl-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .fl-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .fl-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            margin-bottom: 20px;
-        }
-
-        .fl-item h4 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #111;
-        }
-
-        .fl-item p {
-            font-size: 14px;
-            line-height: 1.7;
-            color: #555;
-        }
-
-        .fl-quote {
-            font-style: italic;
-            font-size: 16px;
-            font-weight: 600;
-            max-width: 800px;
-            margin: 0 auto 60px auto;
-            color: #222;
-        }
-
-        .fl-colors {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            flex-wrap: wrap;
-        }
-
-        .color-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 300px;
-        }
-
-        .color-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .color-raspberry { background-color: #8B1E3F; }
-        .color-teal { background-color: #0D3B3F; }
-
-        .color-hex {
-            font-size: 14px;
-            color: #444;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-            font-weight: 500;
-        }
-
-        .color-item h4 {
-            font-size: 16px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .color-item p {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #555;
-        }
-
-        @media (max-width: 768px) {
-            .fl-grid {
-                grid-template-columns: 1fr;
-                gap: 50px;
-            }
-            .fl-colors {
-                gap: 40px;
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-/* ======================== GALLERY ======================== */
-        .gallery-section {
-            background: linear-gradient(135deg, #8B182A, #5a0815);
-            width: 100%;
-            min-height: 70vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .gallery-title {
-            color: white;
-            font-family: 'Playfair Display', serif;
-            font-size: 56px;
-            font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: 2px;
-        }
-
-        @media (max-width: 768px) {
-            .gallery-title {
-                font-size: 40px;
-            }
-            .gallery-section {
-                min-height: 50vh;
             }
         }
 
@@ -927,23 +695,46 @@
     </section>
     <!-- HOME END -->
 
-    <!-- NAVBAR START -->
-    <nav class="navbar">
+    <!-- NAVBAR ATAS START -->
+    <nav class="navbar" id="navbar">
         <div class="navbar-container">
+            <!-- Logo Tetap di Kiri -->
             <a href="#" class="logo-navbar">
                 <img src="Arsyatera.svg" alt="Logo Navbar" onerror="this.onerror=null; this.src='https://placehold.co/100x40?text=Logo&bg=white'">
             </a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="isi-navbar/about.html">About</a></li>
-                <li><a href="isi-navbar/gallery.html">Gallery</a></li>
-                <li><a href="isi-navbar/secreto.html">Secreto</a></li>
-                <li><a href="isi-navbar/contact.html">Contact</a></li>
-            </ul>
-            </ul>
+            
+            <!-- Tombol Hamburger di Kanan -->
+            <button class="hamburger" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
-    <!-- NAVBAR END -->
+    <!-- NAVBAR ATAS END -->
+
+    <!-- SIDEBAR MENU START -->
+    <div class="overlay" id="overlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <!-- Logo juga ditampilkan di dalam sidebar -->
+            <a href="#" class="logo-sidebar">
+                <img src="Arsyatera.svg" alt="Logo Sidebar" onerror="this.onerror=null; this.src='https://placehold.co/100x40?text=Logo&bg=white'">
+            </a>
+            <button class="close-btn" id="closeBtn">&times;</button>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="isi-navbar/about.html">About</a></li>
+            <li><a href="isi-navbar/gallery.html">Gallery</a></li>
+            <li><a href="isi-navbar/secreto.html">Secreto</a></li>
+            <li><a href="isi-navbar/advice.html">Advice</a></li>
+            <li><a href="isi-navbar/contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <!-- SIDEBAR MENU END -->
 
     <!-- MEET OUR LEADER START -->
     <section class="meet-leader">
@@ -974,7 +765,7 @@
                 </div>
             </div>
 
-            <!-- Card Kedua (Putri) - Teks di kiri, Gambar di kanan -->
+            <!-- Card Kedua (Putri) -->
             <div class="ml-card reverse">
                 <div class="ml-image">
                     <img src="Bingkai-lia.webp" alt="Foto Ketua Angkatan Putri" onerror="this.onerror=null; this.src='https://placehold.co/300x400?text=Bingkai+Foto'">
@@ -996,26 +787,6 @@
         </div>
     </section>
     <!-- MEET OUR LEADER END -->
-
-    <!-- AFTER MOVIE START -->
-    <!-- <section class="after-movie">
-        <h2 class="am-main-title">Our After Movie</h2>
-        
-        <div class="am-container">
-            <div class="am-video-wrapper">
-                Link Youtube
-            </div>
-            <div class="am-content">
-                <span class="am-tag">Who we are</span>
-                <h3 class="am-title">AFTER MOVIE</h3>
-                <p class="am-desc">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                </p>
-                <a href="#" class="am-btn">DISCOVER MORE</a>
-            </div>
-        </div>
-    </section> -->
-    <!-- AFTER MOVIE END -->
 
     <!-- THEME SONG START -->
     <section class="ts-theme-song">
@@ -1051,7 +822,7 @@
                     </div>
                 </div>
                 <div class="ts-image">
-                    <img src="Logo_Pose.png"theme song cover">
+                    <img src="Logo_Pose.png" alt="theme song cover">
                     <div class="ts-controls">
                         <span>⏮</span><span>▶</span><span>⏭</span>
                     </div>
@@ -1095,11 +866,12 @@
     <!-- FOOTER END -->
 
     <script>
-        // Logika Navbar yang Muncul ketika discroll
-        const navbar = document.querySelector(".navbar");
+        // ======================= LOGIKA SCROLL NAVBAR =======================
+        const navbar = document.getElementById("navbar");
         const home = document.querySelector(".home");
 
         window.addEventListener("scroll", () => {
+            // Navbar akan muncul ketika di-scroll melewati hero section
             if (window.scrollY > home.offsetHeight - 50) {
                 navbar.classList.add("active");
             } else {
@@ -1107,7 +879,23 @@
             }
         });
 
-        // Logika Carousel Drag
+        // ======================= LOGIKA SIDEBAR =======================
+        const hamburgerBtn = document.getElementById("hamburgerBtn");
+        const sidebar = document.getElementById("sidebar");
+        const closeBtn = document.getElementById("closeBtn");
+        const overlay = document.getElementById("overlay");
+
+        function toggleSidebar() {
+            sidebar.classList.toggle("active");
+            overlay.classList.toggle("active");
+        }
+
+        hamburgerBtn.addEventListener("click", toggleSidebar);
+        closeBtn.addEventListener("click", toggleSidebar);
+        overlay.addEventListener("click", toggleSidebar);
+
+
+        // ======================= LOGIKA CAROUSEL DRAG =======================
         document.addEventListener("DOMContentLoaded", () => {
             const track = document.querySelector(".inner-track");
             const carousel = document.querySelector(".inner-carousel");
