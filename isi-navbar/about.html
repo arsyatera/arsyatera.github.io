@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Arsyatera</title>
+    <!-- Import Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
@@ -18,7 +19,7 @@
         }
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
 
-/* ======================== NAVBAR ======================== */
+/* ======================== NAVBAR ATAS ======================== */
         .navbar {
             background-color: #D0D0D0;
             display: flex;
@@ -31,34 +32,147 @@
             z-index: 1000;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
+
         .navbar-container {
             width: 100%;
             max-width: 1200px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
+            /* Padding dibuat sangat minim agar ramping seperti di gambar */
+            padding: 5px 40px; 
         }
-        .logo-navbar img { height: 45px; max-width: 100%; object-fit: contain; }
-        .nav-links { display: flex; list-style: none; gap: 45px; margin: 0; padding: 0; }
+
+        .logo-navbar img {
+            /* Tinggi logo disesuaikan agar tidak memaksa navbar melebar */
+            height: 35px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        /* Tombol Hamburger */
+        .hamburger {
+            background: none;
+            border: none;
+            padding: 2px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px; /* Jarak antar garis diperkecil sedikit */
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger:hover {
+            transform: scale(1.05);
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px; /* Garis lebih pendek sedikit agar proporsional */
+            height: 3px;
+            background-color: #5a0815;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-container {
+                padding: 5px 25px;
+            }
+        }
+
+/* ======================== SIDEBAR (MENU KANAN) ======================== */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100vh;
+            background-color: #D0D0D0;
+            z-index: 1002;
+            padding: 40px 30px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+            transition: right 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .logo-sidebar img {
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 35px;
+            color: #5a0815;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #A3162B;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
         .nav-links a {
             text-decoration: none;
             color: #5a0815;
             font-family: 'Playfair Display', serif;
-            font-size: 17px;
+            font-size: 20px;
             font-weight: 700;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, padding-left 0.3s ease;
         }
-        .nav-links a:hover { color: #A3162B; }
 
-        @media (max-width: 768px) {
-            .navbar-container { padding: 10px 25px; }
-            .nav-links { gap: 20px; }
-            .nav-links a { font-size: 15px; }
+        .nav-links a:hover {
+            color: #A3162B;
+            padding-left: 10px;
         }
+
         @media (max-width: 576px) {
-            .navbar-container { flex-direction: column; gap: 15px; padding: 15px 20px; }
-            body { padding-top: 110px; }
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
         }
 
 /* ======================== TENTANG ARSYATERA ======================== */
@@ -159,7 +273,7 @@
             width: 100%; 
             position: relative;
             z-index: 10;
-            box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.08); /* Ini kodenya */
+            box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.08); /* Efek bayangan footer */
         }
         .footer-top {
             max-width: 800px;
@@ -187,20 +301,47 @@
 </head>
 
 <body>
-    <nav class="navbar">
+    <!-- NAVBAR ATAS START -->
+    <nav class="navbar" id="navbar">
         <div class="navbar-container">
+            <!-- Logo Tetap di Kiri -->
             <a href="../index.html" class="logo-navbar">
                 <img src="../Arsyatera.svg" alt="Logo Navbar" onerror="this.onerror=null; this.src='https://placehold.co/100x40?text=Logo&bg=white'">
             </a>
-            <ul class="nav-links">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="secreto.html">Secreto</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+            
+            <!-- Tombol Hamburger di Kanan -->
+            <button class="hamburger" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+    <!-- NAVBAR ATAS END -->
+
+    <!-- SIDEBAR MENU START -->
+    <div class="overlay" id="overlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <!-- Logo juga ditampilkan di dalam sidebar -->
+            <a href="../index.html" class="logo-sidebar">
+                <img src="../Arsyatera.svg" alt="Logo Sidebar" onerror="this.onerror=null; this.src='https://placehold.co/100x40?text=Logo&bg=white'">
+            </a>
+            <button class="close-btn" id="closeBtn">&times;</button>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="secreto.html">Secreto</a></li>
+            <li><a href="advice.html">Advice</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <!-- SIDEBAR MENU END -->
+
     <section class="tentang">
         
         <div class="filosofi-nama">
@@ -302,5 +443,22 @@
             <p>Copyright © 2026 ARSYATERA - All right reserved</p>
         </div>
     </footer>
-    </body>
+
+    <script>
+        // ======================= LOGIKA SIDEBAR MENU =======================
+        const hamburgerBtn = document.getElementById("hamburgerBtn");
+        const sidebar = document.getElementById("sidebar");
+        const closeBtn = document.getElementById("closeBtn");
+        const overlay = document.getElementById("overlay");
+
+        function toggleSidebar() {
+            sidebar.classList.toggle("active");
+            overlay.classList.toggle("active");
+        }
+
+        hamburgerBtn.addEventListener("click", toggleSidebar);
+        closeBtn.addEventListener("click", toggleSidebar);
+        overlay.addEventListener("click", toggleSidebar);
+    </script>
+</body>
 </html>
